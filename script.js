@@ -99,7 +99,8 @@ const PRODUCTS_DATA = [
         category: "quarto",
         price: 3899.90,
         originalPrice: 4874.88,
-        image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&h=600&fit=crop",
+        // Imagem corrigida (não é mais a mesma da mesa)
+        image: "https://images.unsplash.com/photo-1558990390-517c918c5e60?w=800&h=600&fit=crop",
         description: "Guarda-roupa com 6 portas espelhadas e interior em madeira maciça. Amplo espaço interno com organizadores. Design moderno e funcional.",
         specs: "Largura: 240cm | Altura: 220cm | Profundidade: 60cm | Madeira + Espelho",
         isNew: true,
@@ -201,170 +202,6 @@ const PRODUCTS_DATA = [
 ];
 
 // ============================================
-// 🛒 CARRINHO DE COMPRAS
-// ============================================
-
-class ShoppingCart {
-    constructor() {
-        this.items = JSON.parse(localStorage.getItem('cartItems')) || [];
-        this.updateCartUI();
-    }
-
-    addItem(product) {
-        const existingItem = this.items.find(item => item.id === product.id);
-        
-        if (existingItem) {
-            existingItem.quantity += 1;
-        } else {
-            this.items.push({ ...product, quantity: 1 });
-        }
-        
-        this.saveCart();
-        this.updateCartUI();
-        this.showNotification('Produto adicionado ao carrinho!', 'success');
-    }
-
-    removeItem(productId) {
-        this.items = this.items.filter(item => item.id !== productId);
-        this.saveCart();
-        this.updateCartUI();
-        this.showNotification('Produto removido do carrinho!', 'info');
-    }
-
-    updateQuantity(productId, quantity) {
-        const item = this.items.find(item => item.id === productId);
-        if (item) {
-            item.quantity = Math.max(0, quantity);
-            if (item.quantity === 0) {
-                this.removeItem(productId);
-            } else {
-                this.saveCart();
-                this.updateCartUI();
-            }
-        }
-    }
-
-    getTotal() {
-        return this.items.reduce((total, item) => total + (item.price * item.quantity), 0);
-    }
-
-    getItemCount() {
-        return this.items.reduce((count, item) => count + item.quantity, 0);
-    }
-
-    saveCart() {
-        localStorage.setItem('cartItems', JSON.stringify(this.items));
-    }
-
-    updateCartUI() {
-        const cartBadge = document.querySelector('#cartBtn .badge');
-        const itemCount = this.getItemCount();
-        
-        if (cartBadge) {
-            cartBadge.textContent = itemCount;
-            cartBadge.style.display = itemCount > 0 ? 'block' : 'none';
-        }
-    }
-
-    showNotification(message, type = 'info') {
-        const notification = document.createElement('div');
-        notification.className = `notification notification-${type}`;
-        notification.innerHTML = `
-            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-info-circle'}"></i>
-            <span>${message}</span>
-        `;
-        
-        document.body.appendChild(notification);
-        
-        setTimeout(() => {
-            notification.classList.add('show');
-        }, 100);
-        
-        setTimeout(() => {
-            notification.classList.remove('show');
-            setTimeout(() => {
-                document.body.removeChild(notification);
-            }, 300);
-        }, 3000);
-    }
-}
-
-// ============================================
-// ❤️ FAVORITOS
-// ============================================
-
-class Favorites {
-    constructor() {
-        this.items = JSON.parse(localStorage.getItem('favoriteItems')) || [];
-        this.updateFavoritesUI();
-    }
-
-    toggle(product) {
-        const existingIndex = this.items.findIndex(item => item.id === product.id);
-        
-        if (existingIndex > -1) {
-            this.items.splice(existingIndex, 1);
-            this.showNotification('Produto removido dos favoritos!', 'info');
-        } else {
-            this.items.push(product);
-            this.showNotification('Produto adicionado aos favoritos!', 'success');
-        }
-        
-        this.saveFavorites();
-        this.updateFavoritesUI();
-    }
-
-    isFavorite(productId) {
-        return this.items.some(item => item.id === productId);
-    }
-
-    saveFavorites() {
-        localStorage.setItem('favoriteItems', JSON.stringify(this.items));
-    }
-
-    updateFavoritesUI() {
-        const favoritesBadge = document.querySelector('#favoritesBtn .badge');
-        const itemCount = this.items.length;
-        
-        if (favoritesBadge) {
-            favoritesBadge.textContent = itemCount;
-            favoritesBadge.style.display = itemCount > 0 ? 'block' : 'none';
-        }
-
-        // Atualizar ícones de favoritos nos produtos
-        document.querySelectorAll('.product-card').forEach(card => {
-            const productId = parseInt(card.dataset.productId);
-            const favoriteBtn = card.querySelector('.favorite-btn');
-            if (favoriteBtn) {
-                favoriteBtn.classList.toggle('active', this.isFavorite(productId));
-            }
-        });
-    }
-
-    showNotification(message, type = 'info') {
-        const notification = document.createElement('div');
-        notification.className = `notification notification-${type}`;
-        notification.innerHTML = `
-            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-info-circle'}"></i>
-            <span>${message}</span>
-        `;
-        
-        document.body.appendChild(notification);
-        
-        setTimeout(() => {
-            notification.classList.add('show');
-        }, 100);
-        
-        setTimeout(() => {
-            notification.classList.remove('show');
-            setTimeout(() => {
-                document.body.removeChild(notification);
-            }, 300);
-        }, 3000);
-    }
-}
-
-// ============================================
 // 🎨 RENDERIZAÇÃO DE PRODUTOS
 // ============================================
 
@@ -374,8 +211,6 @@ class ProductRenderer {
         this.filteredProducts = [...this.products];
         this.currentPage = 1;
         this.productsPerPage = 8;
-        this.cart = new ShoppingCart();
-        this.favorites = new Favorites();
         
         this.init();
     }
@@ -448,9 +283,6 @@ class ProductRenderer {
 
         // Atualizar botão load more
         this.updateLoadMoreButton();
-
-        // Atualizar favoritos UI
-        this.favorites.updateFavoritesUI();
     }
 
     createProductCard(product) {
@@ -482,11 +314,6 @@ class ProductRenderer {
                     ${newBadge}
                     ${topSellerBadge}
                 </div>
-                <div class="product-overlay">
-                    <button class="favorite-btn" onclick="productRenderer.favorites.toggle(productRenderer.products.find(p => p.id === ${product.id}))">
-                        <i class="fas fa-heart"></i>
-                    </button>
-                </div>
             </div>
             <div class="product-content">
                 <h3 class="product-title">${product.name}</h3>
@@ -497,10 +324,6 @@ class ProductRenderer {
                     ${originalPrice}
                 </div>
                 <div class="product-actions">
-                    <button class="btn-add-cart" onclick="productRenderer.cart.addItem(productRenderer.products.find(p => p.id === ${product.id}))">
-                        <i class="fas fa-shopping-bag"></i>
-                        <span>Adicionar</span>
-                    </button>
                     <button class="btn-whatsapp" onclick="productRenderer.openWhatsApp(${product.id})">
                         <i class="fab fa-whatsapp"></i>
                         <span>Comprar</span>
@@ -540,24 +363,6 @@ class ProductRenderer {
         
         window.open(whatsappUrl, '_blank');
     }
-
-    openWhatsAppForCart() {
-        const cart = this.cart;
-        if (cart.items.length === 0) return;
-
-        let message = 'Olá! Gostaria de finalizar a compra dos seguintes produtos:\n\n';
-        
-        cart.items.forEach(item => {
-            message += `• ${item.name} - ${item.quantity}x R$ ${item.price.toFixed(2).replace('.', ',')} = R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}\n`;
-        });
-        
-        message += `\nTotal: R$ ${cart.getTotal().toFixed(2).replace('.', ',')}\n\n`;
-        message += 'Endereço para entrega: [INFORMAR ENDEREÇO]\n';
-        message += 'Forma de pagamento: [INFORMAR FORMA DE PAGAMENTO]';
-
-        const whatsappUrl = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`;
-        window.open(whatsappUrl, '_blank');
-    }
 }
 
 // ============================================
@@ -570,16 +375,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // Inicializar renderizador de produtos
     productRenderer = new ProductRenderer();
     
+    // Inicializar a animação do título do Hero (Splitting.js)
+    if (typeof Splitting === 'function') {
+        Splitting();
+    }
+    
     // Inicializar outras funcionalidades
     initNavigation();
     initScrollAnimations();
-    initFormHandlers();
-    initMobileMenu();
-    
-    // Event listener para botão de catálogo no rodapé
-    document.querySelectorAll('#catalogBtn').forEach(btn => {
-        btn.addEventListener('click', handleCatalogRequest);
-    });
+    initFormHandlers(); // <- Agora inicializa o formulário do WhatsApp
     
     console.log('Beleza de Móveis - Sistema inicializado com sucesso!');
 });
@@ -622,26 +426,6 @@ function initNavigation() {
             navMenu.classList.remove('active');
         });
     });
-
-    // Cart button
-    const cartBtn = document.getElementById('cartBtn');
-    if (cartBtn) {
-        cartBtn.addEventListener('click', () => {
-            showCartModal();
-        });
-    }
-
-    // Favorites button
-    const favoritesBtn = document.getElementById('favoritesBtn');
-    if (favoritesBtn) {
-        favoritesBtn.addEventListener('click', () => {
-            showFavoritesModal();
-        });
-    }
-}
-
-function initMobileMenu() {
-    // Mobile menu já foi inicializado em initNavigation
 }
 
 // ============================================
@@ -649,29 +433,6 @@ function initMobileMenu() {
 // ============================================
 
 function initScrollAnimations() {
-    // Animação de contadores
-    const counters = document.querySelectorAll('[data-count]');
-    
-    const animateCounter = (counter) => {
-        const target = parseInt(counter.dataset.count);
-        const duration = 2000;
-        const increment = target / (duration / 16);
-        let current = 0;
-        
-        const updateCounter = () => {
-            current += increment;
-            if (current < target) {
-                counter.textContent = Math.floor(current);
-                requestAnimationFrame(updateCounter);
-            } else {
-                counter.textContent = target;
-            }
-        };
-        
-        updateCounter();
-    };
-
-    // Intersection Observer para animações
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
@@ -680,24 +441,21 @@ function initScrollAnimations() {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                if (entry.target.hasAttribute('data-count')) {
-                    animateCounter(entry.target);
-                } else {
-                    entry.target.classList.add('animate-in');
-                }
+                // Lógica do contador removida, apenas adiciona a classe
+                entry.target.classList.add('animate-in');
                 observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
 
     // Observar elementos
-    document.querySelectorAll('[data-count], .collection-item, .product-card, .feature').forEach(el => {
+    document.querySelectorAll('.collection-item, .product-card, .feature').forEach(el => {
         observer.observe(el);
     });
 }
 
 // ============================================
-// 📝 FORMULÁRIOS
+// 📝 FORMULÁRIOS (VERSÃO WHATSAPP)
 // ============================================
 
 function initFormHandlers() {
@@ -707,156 +465,42 @@ function initFormHandlers() {
     }
 }
 
+/**
+ * *** FUNÇÃO MODIFICADA ***
+ * Agora envia os dados do formulário para o WhatsApp.
+ */
 function handleContactForm(e) {
     e.preventDefault();
     
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
     
-    // Simular envio
-    const submitBtn = e.target.querySelector('button[type="submit"]');
-    const originalText = submitBtn.innerHTML;
-    
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
-    submitBtn.disabled = true;
-    
-    setTimeout(() => {
-        alert('Mensagem enviada com sucesso! Entraremos em contato em breve.');
-        e.target.reset();
-        submitBtn.innerHTML = originalText;
-        submitBtn.disabled = false;
-    }, 2000);
-}
+    // 1. Formata a mensagem que será enviada
+    // Usamos .trim() para remover espaços em branco desnecessários
+    const message = `
+Olá! Gostaria de fazer um contato pelo site.
 
-function handleCatalogRequest() {
-    const message = 'Olá! Gostaria de receber o catálogo completo de móveis.';
-    const whatsappUrl = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`;
+*Nome:* ${data.name.trim()}
+*Email:* ${data.email.trim()}
+*Telefone:* ${data.phone ? data.phone.trim() : 'Não preenchido'}
+*Assunto:* ${data.subject}
+
+*Mensagem:*
+${data.message.trim()}
+    `.trim(); // .trim() final para a mensagem inteira
+    
+    // 2. Pega o número de telefone do seu objeto CONFIG
+    const whatsappNumber = CONFIG.whatsappNumber;
+    
+    // 3. Cria a URL do WhatsApp, codificando a mensagem
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    
+    // 4. Abre o WhatsApp em uma nova aba
     window.open(whatsappUrl, '_blank');
+    
+    // 5. Limpa o formulário após o envio
+    e.target.reset();
 }
-
-// ============================================
-// 🛍️ MODAIS
-// ============================================
-
-function showCartModal() {
-    const cart = productRenderer?.cart || new ShoppingCart();
-    
-    if (cart.items.length === 0) {
-        alert('Seu carrinho está vazio!');
-        return;
-    }
-
-    const modal = document.createElement('div');
-    modal.className = 'modal-overlay';
-    modal.innerHTML = `
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Meu Carrinho</h3>
-                <button class="modal-close">&times;</button>
-            </div>
-            <div class="modal-body">
-                ${cart.items.map(item => `
-                    <div class="cart-item">
-                        <img src="${item.image}" alt="${item.name}">
-                        <div class="cart-item-info">
-                            <h4>${item.name}</h4>
-                            <p>R$ ${item.price.toFixed(2).replace('.', ',')}</p>
-                            <div class="quantity-controls">
-                                <button onclick="productRenderer.cart.updateQuantity(${item.id}, ${item.quantity - 1})">-</button>
-                                <span>${item.quantity}</span>
-                                <button onclick="productRenderer.cart.updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
-                            </div>
-                        </div>
-                        <button class="remove-item" onclick="productRenderer.cart.removeItem(${item.id})">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                `).join('')}
-            </div>
-            <div class="modal-footer">
-                <div class="cart-total">
-                    <strong>Total: R$ ${cart.getTotal().toFixed(2).replace('.', ',')}</strong>
-                </div>
-                <div class="modal-actions">
-                    <button class="btn btn-outline" onclick="this.closest('.modal-overlay').remove()">Continuar Comprando</button>
-                    <button class="btn btn-primary" onclick="productRenderer.openWhatsAppForCart()">Finalizar no WhatsApp</button>
-                </div>
-            </div>
-        </div>
-    `;
-
-    document.body.appendChild(modal);
-    
-    modal.querySelector('.modal-close').addEventListener('click', () => {
-        modal.remove();
-    });
-
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.remove();
-        }
-    });
-}
-
-function showFavoritesModal() {
-    const favorites = productRenderer?.favorites || new Favorites();
-    
-    if (favorites.items.length === 0) {
-        alert('Você ainda não tem favoritos!');
-        return;
-    }
-
-    const modal = document.createElement('div');
-    modal.className = 'modal-overlay';
-    modal.innerHTML = `
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Meus Favoritos</h3>
-                <button class="modal-close">&times;</button>
-            </div>
-            <div class="modal-body">
-                ${favorites.items.map(item => `
-                    <div class="favorite-item">
-                        <img src="${item.image}" alt="${item.name}">
-                        <div class="favorite-item-info">
-                            <h4>${item.name}</h4>
-                            <p>R$ ${item.price.toFixed(2).replace('.', ',')}</p>
-                            <div class="favorite-actions">
-                                <button class="btn btn-primary" onclick="productRenderer.cart.addItem(productRenderer.products.find(p => p.id === ${item.id})); productRenderer.favorites.toggle(productRenderer.products.find(p => p.id === ${item.id})); this.closest('.favorite-item').remove();">
-                                    Adicionar ao Carrinho
-                                </button>
-                                <button class="btn btn-whatsapp" onclick="productRenderer.openWhatsApp(${item.id})">
-                                    <i class="fab fa-whatsapp"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <button class="remove-item" onclick="productRenderer.favorites.toggle(productRenderer.products.find(p => p.id === ${item.id})); this.closest('.favorite-item').remove(); if (productRenderer.favorites.items.length === 0) this.closest('.modal-overlay').remove();">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                `).join('')}
-            </div>
-        </div>
-    `;
-
-    document.body.appendChild(modal);
-    
-    modal.querySelector('.modal-close').addEventListener('click', () => {
-        modal.remove();
-    });
-
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.remove();
-        }
-    });
-}
-
-// ============================================
-// 📱 WHATSAPP INTEGRATION
-// ============================================
-
-// Função já está na classe ProductRenderer
 
 // ============================================
 // 🎯 UTILITÁRIOS
