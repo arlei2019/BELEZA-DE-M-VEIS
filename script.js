@@ -1,483 +1,641 @@
 // ============================================
-// 🚀 BELEZA DE MÓVEIS - JAVASCRIPT PREMIUM
+// BELEZA DE MÓVEIS - script.js (PROFESSIONAL EDITION)
+// Funcionalidades aprimoradas para loja de móveis de luxo
 // ============================================
 
-// Configurações Globais
+// Configurações
 const CONFIG = {
-    whatsappNumber: '5571992714599',
-    currency: 'BRL',
-    locale: 'pt-BR'
+  whatsappNumber: '5571992714599',
+  currency: 'BRL',
+  locale: 'pt-BR',
+  companyName: 'BELEZA DE MÓVEIS'
 };
 
-// Função de formatação de preço profissional usando Intl.NumberFormat
-const formatPrice = (price) => {
-    return new Intl.NumberFormat(CONFIG.locale, {
-        style: 'currency',
-        currency: CONFIG.currency,
-        minimumFractionDigits: 2,
-    }).format(price);
-};
-
-// ============================================
-// 📦 PRODUTOS - Dados Corrigidos e Completos
-// ============================================
-
+// Dados dos produtos
 const PRODUCTS_DATA = [
-    {
-        id: 1,
-        name: "Sofá Chesterfield 3 Lugares",
-        category: "sofas",
-        price: 3899.90,
-        originalPrice: 4874.88,
-        image: "https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?w=600&q=80",
-        description: "Sofá clássico em couro legítimo. Design atemporal e acabamento impecável.",
-        specs: "L: 220cm | P: 95cm | Couro Legítimo",
-        isNew: false,
-        isPromotion: true,
-        discount: 20,
-        isTopSeller: true
-    },
-    {
-        id: 2,
-        name: "Cama King Size Royal",
-        category: "camas",
-        price: 2599.90,
-        originalPrice: 3200.00,
-        image: "https://images.unsplash.com/photo-1505693416388-b0346efee749?w=600&q=80",
-        description: "Conforto supremo com cabeceira estofada em veludo.",
-        specs: "King Size | Veludo Premium",
-        isNew: true,
-        isPromotion: false,
-        discount: 0,
-        isTopSeller: true
-    },
-    {
-        id: 3,
-        name: "Mesa de Jantar Carvalho",
-        category: "mesas",
-        price: 1899.90,
-        originalPrice: null,
-        image: "https://images.unsplash.com/photo-1577140917170-285929dfe55c?w=600&q=80",
-        description: "Mesa robusta em madeira maciça para 6 lugares.",
-        specs: "L: 180cm | Madeira Maciça",
-        isNew: false,
-        isPromotion: false,
-        discount: 0,
-        isTopSeller: false
-    },
-    {
-        id: 4,
-        name: "Poltrona de Leitura Modern",
-        category: "poltronas",
-        price: 899.90,
-        originalPrice: 1100.00,
-        image: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=600&q=80",
-        description: "Design ergonômico perfeito para seu canto de leitura.",
-        specs: "Tecido Linho | Pés Palito",
-        isNew: true,
-        isPromotion: true,
-        discount: 15,
-        isTopSeller: false
-    },
-    {
-        id: 5,
-        name: "Sofá Retrátil Confort",
-        category: "sofas",
-        price: 2200.00,
-        originalPrice: 2800.00,
-        image: "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=600&q=80",
-        description: "Sofá retrátil e reclinável, ideal para home theater.",
-        specs: "Aberto: 1.80m | Suede",
-        isNew: false,
-        isPromotion: true,
-        discount: 20,
-        isTopSeller: true
-    },
-    {
-        id: 6,
-        name: "Guarda-Roupa 6 Portas Espelhado",
-        category: "quarto",
-        price: 3899.90,
-        originalPrice: 4874.88,
-        // Imagem corrigida (não é mais a mesma da mesa)
-        image: "https://images.unsplash.com/photo-1558990390-517c918c5e60?w=800&h=600&fit=crop",
-        description: "Guarda-roupa com 6 portas espelhadas e interior em madeira maciça. Amplo espaço interno com organizadores. Design moderno e funcional.",
-        specs: "Largura: 240cm | Altura: 220cm | Profundidade: 60cm | Madeira + Espelho",
-        isNew: true,
-        isPromotion: true,
-        discount: 20,
-        isTopSeller: false,
-        colors: ["Branco", "Preto", "Madeira"]
-    },
-    {
-        id: 7,
-        name: "Cadeira Executiva Premium",
-        category: "escritorio",
-        price: 1899.90,
-        originalPrice: 2374.88,
-        image: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=800&h=600&fit=crop",
-        description: "Cadeira executiva em couro legítimo com ajuste de altura e reclinação. Base em alumínio polido com rodízios silenciosos.",
-        specs: "Altura: 120cm | Largura: 65cm | Profundidade: 65cm | Couro Legítimo",
-        isNew: false,
-        isPromotion: false,
-        discount: 0,
-        isTopSeller: false
-    },
-    {
-        id: 7,
-        name: "Mesa Lateral Industrial",
-        category: "mesas",
-        price: 450.00,
-        originalPrice: 550.00,
-        image: "https://images.unsplash.com/photo-1533090481720-856c6e7591e0?w=600&q=80",
-        description: "Pequena e elegante, com base de metal e tampo de madeira.",
-        specs: "A: 60cm | Ferro e MDF",
-        isNew: true,
-        isPromotion: true,
-        discount: 18,
-        isTopSeller: false
-    },
-    {
-        id: 8,
-        name: "Poltrona Giratória Conforto",
-        category: "poltronas",
-        price: 1250.00,
-        originalPrice: null,
-        image: "https://images.unsplash.com/photo-1617300799796-f94689252c1e?w=600&q=80",
-        description: "Base giratória para máximo conforto e mobilidade.",
-        specs: "Base Cromada | Linho Cinza",
-        isNew: false,
-        isPromotion: false,
-        discount: 0,
-        isTopSeller: true
-    },
-    {
-        id: 9,
-        name: "Sofá de Canto Modular",
-        category: "sofas",
-        price: 4500.00,
-        originalPrice: null,
-        image: "https://images.unsplash.com/photo-1484101403633-562f891dc89a?w=600&q=80",
-        description: "Versatilidade para grandes salas, módulos ajustáveis.",
-        specs: "5 Lugares | Tecido Cinza",
-        isNew: true,
-        isPromotion: false,
-        discount: 0,
-        isTopSeller: false
-    },
-    {
-        id: 10,
-        name: "Mesa de Centro Vidro",
-        category: "mesas",
-        price: 780.00,
-        originalPrice: 900.00,
-        image: "https://images.unsplash.com/photo-1530018607912-eff2daa1bac4?w=600&q=80",
-        description: "Elegância e transparência para ampliar o ambiente.",
-        specs: "Vidro Temperado 10mm",
-        isNew: false,
-        isPromotion: true,
-        discount: 13,
-        isTopSeller: false
-    }
+  {
+    id: 1,
+    name: "Sofá Chesterfield 3 Lugares",
+    category: "sofas",
+    price: 3899.90,
+    originalPrice: 4874.88,
+    image: "https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?w=800&h=600&fit=crop",
+    description: "Sofá Chesterfield clássico em couro legítimo marrom. Design atemporal com acabamento impecável.",
+    specs: "Largura: 220cm | Profundidade: 95cm | Altura: 85cm | Material: Couro Legítimo",
+    isNew: false,
+    isPromotion: true,
+    discount: 20,
+    isTopSeller: true
+  },
+  {
+    id: 2,
+    name: "Cama Queen Size Diamante",
+    category: "camas",
+    price: 5299.00,
+    originalPrice: 6623.75,
+    image: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800&h=600&fit=crop",
+    description: "Cama queen size com cabeceira diamantada luxuosa. Estrutura em madeira maciça com acabamento premium.",
+    specs: "Largura: 198cm | Comprimento: 208cm | Altura: 120cm | Madeira Maciça",
+    isNew: false,
+    isPromotion: true,
+    discount: 20,
+    isTopSeller: true
+  },
+  {
+    id: 3,
+    name: "Mesa de Jantar Oval Premium",
+    category: "mesas",
+    price: 3199.90,
+    originalPrice: 3999.88,
+    image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&h=600&fit=crop",
+    description: "Mesa de jantar oval em mármore travertino. Design elegante para ambientes sofisticados.",
+    specs: "Largura: 220cm | Profundidade: 110cm | Altura: 75cm | Mármore Travertino",
+    isNew: true,
+    isPromotion: true,
+    discount: 20,
+    isTopSeller: false
+  },
+  {
+    id: 4,
+    name: "Poltrona Reclinável Luxo",
+    category: "poltronas",
+    price: 2499.00,
+    originalPrice: 3123.75,
+    image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&h=600&fit=crop",
+    description: "Poltrona reclinável em couro sintético premium. Conforto e estilo em um só produto.",
+    specs: "Largura: 85cm | Profundidade: 90cm | Altura: 105cm | Couro Sintético Premium",
+    isNew: false,
+    isPromotion: true,
+    discount: 20,
+    isTopSeller: true
+  },
+  {
+    id: 5,
+    name: "Sofá Modular Contemporâneo",
+    category: "sofas",
+    price: 4599.90,
+    originalPrice: 5749.88,
+    image: "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=800&h=600&fit=crop",
+    description: "Sofá modular contemporâneo em tecido suede premium. Versatilidade e elegância para seu living.",
+    specs: "Largura: 280cm | Profundidade: 180cm | Altura: 85cm | Tecido Suede Premium",
+    isNew: true,
+    isPromotion: true,
+    discount: 20,
+    isTopSeller: true
+  },
+  {
+    id: 6,
+    name: "Guarda-Roupa 6 Portas Espelhado",
+    category: "quarto",
+    price: 3899.90,
+    originalPrice: 4874.88,
+    image: "https://images.unsplash.com/photo-1558990390-517c918c5e60?w=800&h=600&fit=crop",
+    description: "Guarda-roupa com 6 portas espelhadas. Amplo espaço interno com organização inteligente.",
+    specs: "Largura: 240cm | Altura: 220cm | Profundidade: 60cm | Espelhos de Segurança",
+    isNew: true,
+    isPromotion: true,
+    discount: 20,
+    isTopSeller: false
+  },
+  {
+    id: 7,
+    name: "Cadeira Executiva Premium",
+    category: "escritorio",
+    price: 1899.90,
+    originalPrice: 2374.88,
+    image: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=800&h=600&fit=crop",
+    description: "Cadeira executiva em couro legítimo. Ergonomia e sofisticação para seu escritório.",
+    specs: "Altura: 120cm | Largura: 65cm | Couro Legítimo | Base Giratória",
+    isNew: false,
+    isPromotion: true,
+    discount: 20,
+    isTopSeller: true
+  },
+  {
+    id: 8,
+    name: "Mesa de Centro de Vidro",
+    category: "living",
+    price: 1599.90,
+    originalPrice: 1999.88,
+    image: "https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?w=800&h=600&fit=crop",
+    description: "Mesa de centro com tampo de vidro temperado. Design moderno e elegante.",
+    specs: "Largura: 120cm | Profundidade: 60cm | Vidro Temperado 8mm",
+    isNew: true,
+    isPromotion: true,
+    discount: 20,
+    isTopSeller: false
+  },
+  {
+    id: 9,
+    name: "Conjunto de Jantar 6 Cadeiras",
+    category: "cozinha",
+    price: 4499.90,
+    originalPrice: 5624.88,
+    image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&h=600&fit=crop",
+    description: "Conjunto completo com mesa redonda e 6 cadeiras estofadas. Perfeito para receber.",
+    specs: "Mesa: 150cm Ø | Cadeira: 45x50x90cm | Madeira Maciça",
+    isNew: false,
+    isPromotion: true,
+    discount: 20,
+    isTopSeller: true
+  },
+  {
+    id: 10,
+    name: "Sofá de Jardim Resinado",
+    category: "jardim",
+    price: 2899.90,
+    originalPrice: 3624.88,
+    image: "https://images.unsplash.com/photo-1588991208658-069f5310df04?w=800&h=600&fit=crop",
+    description: "Sofá de jardim em resinado com almofadas impermeáveis. Resistência e conforto ao ar livre.",
+    specs: "Largura: 200cm | Profundidade: 80cm | Resinado Premium | Almofadas Impermeáveis",
+    isNew: true,
+    isPromotion: true,
+    discount: 20,
+    isTopSeller: false
+  },
+  {
+    id: 11,
+    name: "Estante Modular 5 Prateleiras",
+    category: "escritorio",
+    price: 1299.90,
+    originalPrice: 1624.88,
+    image: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=800&h=600&fit=crop",
+    description: "Estante modular com 5 prateleiras ajustáveis. Organização versátil para seu espaço.",
+    specs: "Largura: 180cm | Altura: 200cm | MDF de Alta Densidade",
+    isNew: false,
+    isPromotion: true,
+    discount: 20,
+    isTopSeller: true
+  },
+  {
+    id: 12,
+    name: "Poltrona de Balanço Vintage",
+    category: "poltronas",
+    price: 2199.90,
+    originalPrice: 2749.88,
+    image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&h=600&fit=crop",
+    description: "Poltrona de balanço vintage em tecido macio. Conforto acolchoado e estilo retrô.",
+    specs: "Largura: 70cm | Profundidade: 85cm | Estrutura em Madeira | Tecido Premium",
+    isNew: true,
+    isPromotion: true,
+    discount: 20,
+    isTopSeller: false
+  }
 ];
 
-// ============================================
-// 🎨 RENDERIZAÇÃO DE PRODUTOS
-// ============================================
+// Utilitários
+function formatCurrencyBR(value) {
+  try {
+    return new Intl.NumberFormat(CONFIG.locale, { 
+      style: 'currency', 
+      currency: CONFIG.currency 
+    }).format(value);
+  } catch (e) {
+    return `R$ ${Number(value).toFixed(2).replace('.', ',')}`;
+  }
+}
 
+function debounce(fn, wait = 100) {
+  let timeout;
+  return (...args) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => fn(...args), wait);
+  };
+}
+
+// Classe para renderizar produtos
 class ProductRenderer {
-    constructor() {
-        this.productsGrid = document.getElementById('productsGrid');
-        this.loadMoreButton = document.getElementById('loadMore');
-        this.filterButtons = document.querySelectorAll('.filter-btn');
-        this.productsPerPage = 6;
-        this.currentPage = 1;
-        this.productsPerPage = 8;
+  constructor(options = {}) {
+    this.products = PRODUCTS_DATA.slice();
+    this.filtered = this.products;
+    this.perPage = options.perPage || 6;
+    this.page = 1;
+    this.productsGrid = document.getElementById('productsGrid');
+    this.loadMoreBtn = document.getElementById('loadMoreBtn');
+    this.init();
+  }
+
+  init() {
+    this.renderProducts();
+    this.bindFilterButtons();
+    this.bindLoadMore();
+  }
+
+  bindFilterButtons() {
+    const buttons = document.querySelectorAll('.filter-btn');
+    if (!buttons || buttons.length === 0) return;
+    
+    buttons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const filter = e.currentTarget.dataset.filter || 'all';
+        this.applyFilter(filter);
+      });
+    });
+  }
+
+  bindLoadMore() {
+    if (!this.loadMoreBtn) return;
+    this.loadMoreBtn.addEventListener('click', () => {
+      this.page++;
+      this.renderProducts();
+    });
+  }
+
+  applyFilter(filter) {
+    // Atualizar botões ativos
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.classList.remove('active');
+    });
+    
+    const activeBtn = document.querySelector(`[data-filter="${filter}"]`);
+    if (activeBtn) activeBtn.classList.add('active');
+
+    // Resetar paginação e aplicar filtro
+    this.page = 1;
+    this.filtered = filter === 'all' 
+      ? this.products.slice() 
+      : this.products.filter(product => product.category === filter);
+    
+    this.renderProducts();
+    
+    // Scroll suave para os produtos
+    this.productsGrid.scrollIntoView({ 
+      behavior: 'smooth', 
+      block: 'start' 
+    });
+  }
+
+  createCard(product) {
+    const card = document.createElement('article');
+    card.className = 'product-card';
+    card.setAttribute('data-category', product.category);
+    
+    const discountPercent = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
+    
+    card.innerHTML = `
+      <div class="product-image">
+        <img src="${product.image}" alt="${product.name}" loading="lazy">
+        <div class="product-badges">
+          ${product.isNew ? '<span class="badge badge-new">Novo</span>' : ''}
+          ${product.isPromotion ? `<span class="badge badge-promotion">-${discountPercent}%</span>` : ''}
+          ${product.isTopSeller ? '<span class="badge badge-top">Mais Vendido</span>' : ''}
+        </div>
+      </div>
+      
+      <div class="product-info">
+        <h3 class="product-name">${product.name}</h3>
+        <p class="product-description">${product.description}</p>
+        <p class="product-specs">${product.specs}</p>
         
-        this.bindEvents();
-        this.renderProducts();
-    }
-
-    bindEvents() {
-        this.loadMoreButton.addEventListener('click', () => this.loadMore());
-        this.filterButtons.forEach(button => {
-            button.addEventListener('click', (e) => this.filterProducts(e.target.dataset.filter));
-        });
-        // Adiciona evento de clique para links de filtro no footer
-        document.querySelectorAll('.filter-link').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.filterProducts(e.target.dataset.filter);
-                document.getElementById('produtos').scrollIntoView({ behavior: 'smooth' });
-            });
-        });
-    }
-
-    getFilteredProducts() {
-        if (this.currentFilter === 'all') {
-            return PRODUCTS_DATA;
-        }
-        return PRODUCTS_DATA.filter(p => p.category === this.currentFilter);
-    }
-
-    renderProducts(append = false) {
-        const products = this.getFilteredProducts();
-        const start = append ? (this.currentPage - 1) * this.productsPerPage : 0;
-        const end = this.currentPage * this.productsPerPage;
-        const productsToRender = products.slice(start, end);
-
-        if (!append) {
-            this.productsGrid.innerHTML = '';
-        }
-
-        productsToRender.forEach(product => {
-            this.productsGrid.appendChild(this.createProductCard(product));
-        });
-
-        // Adiciona a animação de fade-in para os novos cards
-        const newCards = this.productsGrid.querySelectorAll('.product-card:not(.animate-in)');
-        newCards.forEach((card, index) => {
-            setTimeout(() => card.classList.add('animate-in'), index * 100);
-        });
-
-        this.updateLoadMoreButton();
-    }
-
-    createProductCard(product) {
-        const card = document.createElement('div');
-        card.className = 'product-card';
-        card.dataset.productId = product.id;
-
-        const discountBadge = product.isPromotion 
-            ? `<div class="product-badge product-badge-discount">-${product.discount}%</div>` 
-            : '';
+        <div class="product-price">
+          <span class="current-price">${formatCurrencyBR(product.price)}</span>
+          ${product.isPromotion ? `<span class="original-price">${formatCurrencyBR(product.originalPrice)}</span>` : ''}
+        </div>
         
-        const newBadge = product.isNew 
-            ? `<div class="product-badge product-badge-new">Novo</div>` 
-            : '';
+        <div class="product-actions">
+          <button class="btn btn-whatsapp btn-small" onclick="openWhatsApp(${product.id})">
+            <i class="fab fa-whatsapp"></i>
+            <span>Comprar</span>
+          </button>
+        </div>
+      </div>
+    `;
+    
+    return card;
+  }
 
-        // Uso da função formatPrice para formatação profissional
-        const originalPriceHTML = product.originalPrice 
-            ? `<span class="product-price-original">${formatPrice(product.originalPrice)}</span>` 
-            : '';
-        
-        const currentPriceHTML = `<span class="product-price-current">${formatPrice(product.price)}</span>`;
+  renderProducts() {
+    if (!this.productsGrid) return;
 
-        card.innerHTML = `
-            <div class="product-image-container">
-                <img src="${product.image}" alt="${product.name}" loading="lazy">
-                <div class="product-badges">
-                    ${discountBadge}
-                    ${newBadge}
-                    ${topSellerBadge}
-                </div>
-            </div>
-            <div class="product-details">
-                <div class="product-info">
-                    <h4 class="product-name">${product.name}</h4>
-                    <p class="product-description">${product.description}</p>
-                    <p class="product-specs">${product.specs}</p>
-                </div>
-                <div class="product-prices">
-                    ${originalPriceHTML}
-                    ${currentPriceHTML}
-                </div>
-                <div class="product-actions">
-                    <button class="btn-whatsapp" onclick="productRenderer.openWhatsApp(${product.id})">
-                        <i class="fab fa-whatsapp"></i>
-                        <span>Comprar</span>
-                    </button>
-                    <a href="https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(`Olá, gostaria de saber mais sobre o produto: ${product.name} (ID: ${product.id}).`)}" target="_blank" class="btn btn-whatsapp btn-small" aria-label="Comprar ${product.name} via WhatsApp">
-                        <i class="fab fa-whatsapp"></i> Comprar
-                    </a>
-                </div>
-            </div>
-        `;
-        return card;
+    const startIndex = (this.page - 1) * this.perPage;
+    const endIndex = startIndex + this.perPage;
+    const productsToShow = this.filtered.slice(0, endIndex);
+    
+    if (this.page === 1) {
+      this.productsGrid.innerHTML = '';
     }
-
-    updateLoadMoreButton() {
-        const totalProducts = this.getFilteredProducts().length;
-        const productsShown = this.currentPage * this.productsPerPage;
-        
-        if (productsShown >= totalProducts) {
-            this.loadMoreButton.style.display = 'none';
-        } else {
-            this.loadMoreButton.style.display = 'inline-flex';
-        }
+    
+    const newProducts = this.filtered.slice(startIndex, endIndex);
+    newProducts.forEach(product => {
+      this.productsGrid.appendChild(this.createCard(product));
+    });
+    
+    // Mostrar/ocultar botão "Carregar Mais"
+    if (this.loadMoreBtn) {
+      if (endIndex >= this.filtered.length) {
+        this.loadMoreBtn.style.display = 'none';
+      } else {
+        this.loadMoreBtn.style.display = 'inline-flex';
+      }
     }
+    
+    // Animação de entrada dos novos produtos
+    this.animateNewProducts();
+  }
 
-    loadMore() {
-        this.currentPage++;
-        this.renderProducts(true);
+  animateNewProducts() {
+    const newCards = this.productsGrid.querySelectorAll('.product-card');
+    const startIndex = (this.page - 1) * this.perPage;
+    
+    for (let i = startIndex; i < newCards.length; i++) {
+      const card = newCards[i];
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(30px)';
+      
+      setTimeout(() => {
+        card.style.transition = 'all 0.5s ease';
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+      }, (i - startIndex) * 100);
     }
+  }
 }
 
-// ============================================
-// 🎯 INICIALIZAÇÃO
-// ============================================
+// Função para filtrar produtos (usada nos links da coleção)
+function filterProducts(category) {
+  const productRenderer = window.productRenderer;
+  if (productRenderer) {
+    productRenderer.applyFilter(category);
+  }
+}
 
-let productRenderer;
+// Função para abrir WhatsApp
+function openWhatsApp(productId) {
+  const product = PRODUCTS_DATA.find(p => p.id === productId);
+  if (!product) return;
+  
+  const message = `Olá! Gostaria de saber mais sobre o produto: ${product.name} - ${formatCurrencyBR(product.price)}`;
+  const whatsappUrl = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`;
+  
+  window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+}
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Inicializar renderizador de produtos
-    productRenderer = new ProductRenderer();
+// Função para compartilhar produto
+function shareProduct(productId) {
+  const product = PRODUCTS_DATA.find(p => p.id === productId);
+  if (!product) return;
+  
+  if (navigator.share) {
+    navigator.share({
+      title: `${product.name} - ${CONFIG.companyName}`,
+      text: product.description,
+      url: window.location.href
+    });
+  } else {
+    // Fallback para navegadores que não suportam Web Share API
+    const shareText = `${product.name} - ${formatCurrencyBR(product.price)}\n${product.description}\n${window.location.href}`;
     
-    // Inicializar a animação do título do Hero (Splitting.js)
-    if (typeof Splitting === 'function') {
-        Splitting();
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(shareText).then(() => {
+        showNotification('Link copiado para a área de transferência!');
+      });
+    } else {
+      // Fallback para navegadores antigos
+      const textArea = document.createElement('textarea');
+      textArea.value = shareText;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+      showNotification('Link copiado para a área de transferência!');
+    }
+  }
+}
+
+// Função para mostrar notificações
+function showNotification(message, type = 'success') {
+  const notification = document.createElement('div');
+  notification.className = `notification notification-${type}`;
+  notification.textContent = message;
+  
+  // Estilos da notificação
+  Object.assign(notification.style, {
+    position: 'fixed',
+    top: '20px',
+    right: '20px',
+    background: type === 'success' ? '#2E7D32' : '#C62828',
+    color: 'white',
+    padding: '16px 24px',
+    borderRadius: '8px',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+    zIndex: '10000',
+    transform: 'translateX(100%)',
+    transition: 'transform 0.3s ease'
+  });
+  
+  document.body.appendChild(notification);
+  
+  // Animação de entrada
+  setTimeout(() => {
+    notification.style.transform = 'translateX(0)';
+  }, 100);
+  
+  // Remover notificação após 3 segundos
+  setTimeout(() => {
+    notification.style.transform = 'translateX(100%)';
+    setTimeout(() => {
+      document.body.removeChild(notification);
+    }, 300);
+  }, 3000);
+}
+
+// Classe para gerenciar a navbar
+class NavbarManager {
+  constructor() {
+    this.navbar = document.getElementById('navbar');
+    this.navMenu = document.getElementById('navMenu');
+    this.mobileToggle = document.getElementById('mobileToggle');
+    this.init();
+  }
+
+  init() {
+    this.bindScrollEvent();
+    this.bindMobileMenu();
+    this.bindSmoothScroll();
+  }
+
+  bindScrollEvent() {
+    let lastScrollY = window.scrollY;
+    
+    window.addEventListener('scroll', debounce(() => {
+      const currentScrollY = window.scrollY;
+      
+      if (currentScrollY > 50) {
+        this.navbar.classList.add('scrolled');
+      } else {
+        this.navbar.classList.remove('scrolled');
+      }
+      
+      lastScrollY = currentScrollY;
+    }, 10));
+  }
+
+  bindMobileMenu() {
+    if (this.mobileToggle) {
+      this.mobileToggle.addEventListener('click', () => {
+        this.navMenu.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
     }
     
-    // Inicializar outras funcionalidades
-    initNavigation();
-    initScrollAnimations();
-    initFormHandlers(); // <- Agora inicializa o formulário do WhatsApp
-    
-    console.log('Beleza de Móveis - Sistema inicializado com sucesso!');
-});
-
-// ============================================
-// 📱 NAVEGAÇÃO E UI
-// ============================================
-
-function initNavigation() {
-    const mobileToggle = document.getElementById('mobileToggle');
-    const mobileClose = document.getElementById('mobileClose');
-    const navMenu = document.getElementById('navMenu');
-
-    mobileToggle.addEventListener('click', () => {
-        navMenu.classList.add('active');
-        document.body.style.overflow = 'hidden'; // Evita rolagem no fundo
-    });
-
-    mobileClose.addEventListener('click', () => {
-        navMenu.classList.remove('active');
-        document.body.style.overflow = 'auto';
-    });
-
     // Fechar menu ao clicar em um link
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', () => {
-            if (window.innerWidth <= 992) {
-                navMenu.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
-        });
+    const navLinks = this.navMenu.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        this.navMenu.classList.remove('active');
+        document.body.style.overflow = '';
+      });
     });
+    
+    // Fechar menu ao clicar fora
+    document.addEventListener('click', (e) => {
+      if (!this.navMenu.contains(e.target) && !this.mobileToggle.contains(e.target)) {
+        this.navMenu.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+  }
+
+  bindSmoothScroll() {
+    const links = document.querySelectorAll('a[href^="#"]');
+    links.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href').substring(1);
+        const targetElement = document.getElementById(targetId);
+        
+        if (targetElement) {
+          const offsetTop = targetElement.offsetTop - 80; // Considerar altura da navbar
+          window.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  }
 }
 
-// ============================================
-// ✨ ANIMAÇÕES E EFEITOS (FIX DE BUG)
-// ============================================
+// Classe para gerenciar animações e efeitos visuais
+class AnimationManager {
+  constructor() {
+    this.init();
+  }
 
-/**
- * Função para inicializar animações de scroll.
- * Esta função corrige o erro de referência na inicialização (bug inicial).
- */
-function initScrollAnimations() {
+  init() {
+    this.initScrollAnimations();
+    this.initTypingEffect();
+    this.initCounters();
+  }
+
+  initScrollAnimations() {
     const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
     };
 
     const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                // Lógica do contador removida, apenas adiciona a classe
-                entry.target.classList.add('animate-in');
-                observer.unobserve(entry.target);
-            }
-        });
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+        }
+      });
     }, observerOptions);
 
-    // Observar elementos
-    document.querySelectorAll('.collection-item, .product-card, .feature').forEach(el => {
-        observer.observe(el);
+    // Observar elementos para animação
+    const elementsToAnimate = document.querySelectorAll(
+      '.section-header, .collection-item, .feature, .contact-item'
+    );
+    
+    elementsToAnimate.forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(el);
     });
-}
 
-// ============================================
-// 📝 FORMULÁRIOS (VERSÃO WHATSAPP)
-// ============================================
+    // Adicionar classe de animação
+    const style = document.createElement('style');
+    style.textContent = `
+      .animate-in {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+      }
+    `;
+    document.head.appendChild(style);
+  }
 
-function initFormHandlers() {
-    const contactForm = document.getElementById('contactForm');
-    if (contactForm) {
-        contactForm.addEventListener('submit', handleContactForm);
+  initTypingEffect() {
+    // Efeito de digitação para o título principal
+    if (typeof Splitting !== 'undefined') {
+      Splitting({
+        target: '.hero-title',
+        by: 'chars'
+      });
+
+      const chars = document.querySelectorAll('.hero-title .char');
+      chars.forEach((char, index) => {
+        char.style.animationDelay = `${index * 0.05}s`;
+      });
     }
-}
+  }
 
-/**
- * *** FUNÇÃO MODIFICADA ***
- * Agora envia os dados do formulário para o WhatsApp.
- */
-function handleContactForm(e) {
-    e.preventDefault();
-    
-    const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData);
-    
-    // 1. Formata a mensagem que será enviada
-    // Usamos .trim() para remover espaços em branco desnecessários
-    const message = `
-Olá! Gostaria de fazer um contato pelo site.
+  initCounters() {
+    // Contadores animados (se houver)
+    const counters = document.querySelectorAll('[data-counter]');
+    counters.forEach(counter => {
+      const target = parseInt(counter.getAttribute('data-counter'));
+      const duration = 2000;
+      const increment = target / (duration / 16);
+      let current = 0;
 
-*Nome:* ${data.name.trim()}
-*Email:* ${data.email.trim()}
-*Telefone:* ${data.phone ? data.phone.trim() : 'Não preenchido'}
-*Assunto:* ${data.subject}
+      const updateCounter = () => {
+        current += increment;
+        if (current < target) {
+          counter.textContent = Math.floor(current);
+          requestAnimationFrame(updateCounter);
+        } else {
+          counter.textContent = target;
+        }
+      };
 
-*Mensagem:*
-${data.message.trim()}
-    `.trim(); // .trim() final para a mensagem inteira
-    
-    // 2. Pega o número de telefone do seu objeto CONFIG
-    const whatsappNumber = CONFIG.whatsappNumber;
-    
-    // 3. Cria a URL do WhatsApp, codificando a mensagem
-    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-    
-    // 4. Abre o WhatsApp em uma nova aba
-    window.open(whatsappUrl, '_blank');
-    
-    // 5. Limpa o formulário após o envio
-    e.target.reset();
-}
+      // Iniciar animação quando visível
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            updateCounter();
+            observer.unobserve(entry.target);
+          }
+        });
+      });
 
-// ============================================
-// 🎯 UTILITÁRIOS
-// ============================================
-
-// Format currency
-function formatCurrency(value) {
-    return new Intl.NumberFormat(CONFIG.locale, {
-        style: 'currency',
-        currency: CONFIG.currency
-    }).format(value);
-}
-
-// Debounce function
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-// ============================================
-// 🚀 DEBUG E INICIALIZAÇÃO FINAL
-// ============================================
-
-// Garantir que tudo seja inicializado corretamente
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log('Beleza de Móveis - Sistema inicializado com sucesso!');
+      observer.observe(counter);
     });
-} else {
-    console.log('Beleza de Móveis - Sistema já carregado!');
+  }
 }
+
+// Inicialização quando o DOM estiver carregado
+document.addEventListener('DOMContentLoaded', () => {
+  // Inicializar componentes
+  window.productRenderer = new ProductRenderer();
+  window.navbarManager = new NavbarManager();
+  window.animationManager = new AnimationManager();
+  
+  // Adicionar classe para indicar que JS está carregado
+  document.body.classList.add('js-loaded');
+  
+  console.log(`${CONFIG.companyName} - Site inicializado com sucesso!`);
+});
+
+// Tratamento de erros global
+window.addEventListener('error', (e) => {
+  console.error('Erro no JavaScript:', e.error);
+});
+
+// Tratamento de erros de recursos
+window.addEventListener('error', (e) => {
+  if (e.target.tagName === 'IMG') {
+    console.warn('Imagem não carregada:', e.target.src);
+    // Adicionar imagem de fallback se necessário
+  }
+}, true);
