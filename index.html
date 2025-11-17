@@ -16,9 +16,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <link rel="stylesheet" href="https://unpkg.com/splitting@1.0.6/dist/splitting.css">
     <link rel="stylesheet" href="style.css">
     
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>">
@@ -71,9 +70,21 @@
                     Qualidade premium que transforma ambientes.
                 </p>
                 <div class="hero-buttons">
-                    <a href="#produtos" class="btn btn-primary">Ver Produtos <i class="fas fa-arrow-right"></i></a>
-                    <a href="#contato" class="btn btn-secondary">Fale Conosco</a>
+                    <a href="#colecao" class="btn btn-primary">
+                        <span>Explorar Coleção</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="#produtos" class="btn btn-secondary">
+                        <span>Ver Produtos</span>
+                        <i class="fas fa-eye"></i>
+                    </a>
                 </div>
+            </div>
+            </div>
+        <div class="hero-scroll">
+            <div class="scroll-indicator">
+                <span>Role para explorar</span>
+                <div class="scroll-arrow"></div>
             </div>
         </div>
     </section>
@@ -173,37 +184,46 @@
         </div>
     </section>
 
-    <section class="about section fade-in" id="sobre">
-        <div class="container">
+    <section class="about" id="sobre">
+         <div class="container">
+            
             <div class="section-header">
-                <h2 class="section-title">Nossa História e Compromisso</h2>
+                <h2 class="section-title">Beleza e Qualidade em Cada Detalhe</h2>
                 <p class="section-subtitle">
-                    Conheça os pilares que sustentam a Beleza de Móveis e nossa busca constante por excelência no seu lar.
+                    Há mais de 15 anos, transformamos casas em lares acolhedores com móveis de excelente qualidade e design exclusivo. 
+                    Nossa missão é oferecer o melhor em conforto, estilo e durabilidade.
                 </p>
             </div>
+            
             <div class="about-content">
-                <div class="about-mvv">
-                    <div class="feature-item">
-                        <div class="feature-icon"><i class="fas fa-bullseye"></i></div>
+                <div class="about-features">
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
                         <div class="feature-text">
-                            <h3>Missão</h3>
-                            <p>Proporcionar um **atendimento excepcional e personalizado**, oferecendo soluções em mobiliário de **design exclusivo**, **alta qualidade** e **conforto** que transformam e impactam positivamente o lar dos nossos clientes.</p>
+                            <h3>Qualidade Premium</h3>
+                            <p>Materiais selecionados e acabamento impecável</p>
                         </div>
                     </div>
-
-                    <div class="feature-item">
-                        <div class="feature-icon"><i class="fas fa-eye"></i></div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-truck"></i>
+                        </div>
                         <div class="feature-text">
-                            <h3>Visão</h3>
-                            <p>Ser **referência** em excelência no segmento de móveis de luxo no Brasil, reconhecida pela confiança, inovação e a capacidade de materializar os sonhos de nossos clientes em ambientes únicos.</p>
+                            <h3>Entrega Rápida</h3>
+                            <p>Entrega e montagem em toda Salvador e região</p>
                         </div>
                     </div>
-
-                    <div class="feature-item">
-                        <div class="feature-icon"><i class="fas fa-handshake"></i></div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
                         <div class="feature-text">
-                            <h3>Valores</h3>
-                            <p>**Qualidade** e Excelência; **Honestidade** e Transparência; **Responsabilidade** com prazos e compromissos; **Respeito** e Comprometimento com o cliente.</p>
+                            <h3>Garantia Total</h3>
+                            <p>2 anos de garantia em todos os produtos</p>
                         </div>
                     </div>
                 </div>
@@ -275,6 +295,46 @@
                         </a>
                     </div>
                 </div>
+                
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" required>
+                            <label for="name">Nome completo</label>
+                        </div>
+                        
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" required>
+                            <label for="email">E-mail</label>
+                        </div>
+                        
+                        <div class="form-group">
+                            <input type="tel" id="phone" name="phone">
+                            <label for="phone">Telefone</label>
+                        </div>
+                        
+                        <div class="form-group">
+                            <select id="subject" name="subject" required>
+                                <option value="">Selecione o assunto</option>
+                                <option value="orcamento">Orçamento</option>
+                                <option value="produto">Informação sobre produto</option>
+                                <option value="entrega">Entrega</option>
+                                <option value="outro">Outro</option>
+                            </select>
+                            <label for="subject">Assunto</label>
+                        </div>
+                        
+                        <div class="form-group">
+                            <textarea id="message" name="message" rows="4" required></textarea>
+                            <label for="message">Mensagem</label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">
+                            <span>Enviar Mensagem</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </section>
@@ -332,6 +392,7 @@
         </div>
     </footer>
 
+    <script src="https://unpkg.com/splitting@1.0.6/dist/splitting.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

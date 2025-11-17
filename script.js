@@ -95,13 +95,29 @@ const PRODUCTS_DATA = [
     },
     {
         id: 6,
-        name: "Cama Queen Wood",
-        category: "camas",
-        price: 1950.00,
-        originalPrice: null,
-        image: "https://images.unsplash.com/photo-1505693314120-0d443867891c?w=600&q=80",
-        description: "Estrutura minimalista em madeira de reflorestamento.",
-        specs: "Queen Size | Madeira Pinus",
+        name: "Guarda-Roupa 6 Portas Espelhado",
+        category: "quarto",
+        price: 3899.90,
+        originalPrice: 4874.88,
+        // Imagem corrigida (não é mais a mesma da mesa)
+        image: "https://images.unsplash.com/photo-1558990390-517c918c5e60?w=800&h=600&fit=crop",
+        description: "Guarda-roupa com 6 portas espelhadas e interior em madeira maciça. Amplo espaço interno com organizadores. Design moderno e funcional.",
+        specs: "Largura: 240cm | Altura: 220cm | Profundidade: 60cm | Madeira + Espelho",
+        isNew: true,
+        isPromotion: true,
+        discount: 20,
+        isTopSeller: false,
+        colors: ["Branco", "Preto", "Madeira"]
+    },
+    {
+        id: 7,
+        name: "Cadeira Executiva Premium",
+        category: "escritorio",
+        price: 1899.90,
+        originalPrice: 2374.88,
+        image: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=800&h=600&fit=crop",
+        description: "Cadeira executiva em couro legítimo com ajuste de altura e reclinação. Base em alumínio polido com rodízios silenciosos.",
+        specs: "Altura: 120cm | Largura: 65cm | Profundidade: 65cm | Couro Legítimo",
         isNew: false,
         isPromotion: false,
         discount: 0,
@@ -165,9 +181,8 @@ const PRODUCTS_DATA = [
     }
 ];
 
-
 // ============================================
-// 🧱 RENDERIZADOR DE PRODUTOS
+// 🎨 RENDERIZAÇÃO DE PRODUTOS
 // ============================================
 
 class ProductRenderer {
@@ -177,7 +192,7 @@ class ProductRenderer {
         this.filterButtons = document.querySelectorAll('.filter-btn');
         this.productsPerPage = 6;
         this.currentPage = 1;
-        this.currentFilter = 'all';
+        this.productsPerPage = 8;
         
         this.bindEvents();
         this.renderProducts();
@@ -251,8 +266,11 @@ class ProductRenderer {
         card.innerHTML = `
             <div class="product-image-container">
                 <img src="${product.image}" alt="${product.name}" loading="lazy">
-                ${discountBadge}
-                ${newBadge}
+                <div class="product-badges">
+                    ${discountBadge}
+                    ${newBadge}
+                    ${topSellerBadge}
+                </div>
             </div>
             <div class="product-details">
                 <div class="product-info">
@@ -265,8 +283,9 @@ class ProductRenderer {
                     ${currentPriceHTML}
                 </div>
                 <div class="product-actions">
-                    <button class="btn btn-primary btn-add-cart" data-product-id="${product.id}" aria-label="Adicionar ${product.name} ao carrinho">
-                        Detalhes
+                    <button class="btn-whatsapp" onclick="productRenderer.openWhatsApp(${product.id})">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>Comprar</span>
                     </button>
                     <a href="https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(`Olá, gostaria de saber mais sobre o produto: ${product.name} (ID: ${product.id}).`)}" target="_blank" class="btn btn-whatsapp btn-small" aria-label="Comprar ${product.name} via WhatsApp">
                         <i class="fab fa-whatsapp"></i> Comprar
@@ -292,23 +311,33 @@ class ProductRenderer {
         this.currentPage++;
         this.renderProducts(true);
     }
-
-    filterProducts(filter) {
-        if (this.currentFilter === filter) return; // Não refiltrar se for o mesmo
-
-        this.currentFilter = filter;
-        this.currentPage = 1;
-        
-        // Atualiza a classe 'active' nos botões de filtro
-        this.filterButtons.forEach(btn => btn.classList.remove('active'));
-        document.querySelector(`.filter-btn[data-filter="${filter}"]`).classList.add('active');
-
-        this.renderProducts();
-    }
 }
 
 // ============================================
-// 🧭 NAVEGAÇÃO E RESPONSIVIDADE
+// 🎯 INICIALIZAÇÃO
+// ============================================
+
+let productRenderer;
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Inicializar renderizador de produtos
+    productRenderer = new ProductRenderer();
+    
+    // Inicializar a animação do título do Hero (Splitting.js)
+    if (typeof Splitting === 'function') {
+        Splitting();
+    }
+    
+    // Inicializar outras funcionalidades
+    initNavigation();
+    initScrollAnimations();
+    initFormHandlers(); // <- Agora inicializa o formulário do WhatsApp
+    
+    console.log('Beleza de Móveis - Sistema inicializado com sucesso!');
+});
+
+// ============================================
+// 📱 NAVEGAÇÃO E UI
 // ============================================
 
 function initNavigation() {
@@ -337,57 +366,6 @@ function initNavigation() {
     });
 }
 
-
-// ============================================
-// 📞 FORMULÁRIO DE CONTATO (WHATSAPP)
-// ============================================
-
-function initFormHandlers() {
-    const form = document.getElementById('contactForm');
-    if (form) {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            // 1. Coletar dados do formulário
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-            const subject = document.getElementById('subject').value;
-            const message = document.getElementById('message').value;
-
-            // 2. Montar a mensagem crua para o WhatsApp
-            const rawWaMessage = `*Nova Mensagem - Site BELEZA DE MÓVEIS*\n\n*Assunto:* ${subject}\n*Nome:* ${name}\n*E-mail:* ${email}\n*Telefone:* ${phone}\n\n*Mensagem:*\n${message}`;
-
-            // 3. Codificar a mensagem para URL
-            const encodedMessage = encodeURIComponent(rawWaMessage);
-            
-            // 4. Pegar o número de telefone do seu objeto CONFIG
-            const whatsappNumber = CONFIG.whatsappNumber; // '5571992714599'
-
-            // 5. Criar a URL final
-            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-
-            // 6. Mudar o botão para "Abrindo WhatsApp..."
-            const submitBtn = e.target.querySelector('button[type="submit"]');
-            const originalText = submitBtn.innerHTML;
-            
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Abrindo WhatsApp...';
-            submitBtn.disabled = true;
-
-            // 7. Abrir o WhatsApp em uma nova aba
-            window.open(whatsappURL, '_blank');
-
-            // 8. Resetar o formulário e o botão após 1.5 segundos
-            setTimeout(() => {
-                alert('Mensagem enviada! Você será redirecionado para o WhatsApp.');
-                e.target.reset();
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-            }, 1500);
-        });
-    }
-}
-
 // ============================================
 // ✨ ANIMAÇÕES E EFEITOS (FIX DE BUG)
 // ============================================
@@ -397,41 +375,109 @@ function initFormHandlers() {
  * Esta função corrige o erro de referência na inicialização (bug inicial).
  */
 function initScrollAnimations() {
-    // 1. Animação de Fade-In para seções
-    const elementsToAnimate = document.querySelectorAll('.fade-in');
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
 
-    const observer = new IntersectionObserver((entries, observer) => {
+    const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
+                // Lógica do contador removida, apenas adiciona a classe
+                entry.target.classList.add('animate-in');
                 observer.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.1 }); // Começa a animar quando 10% do elemento está visível
+    }, observerOptions);
 
-    elementsToAnimate.forEach(element => {
-        observer.observe(element);
-    });
-
-    // 2. Comportamento da Navbar ao rolar
-    window.addEventListener('scroll', () => {
-        const navbar = document.getElementById('navbar');
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
+    // Observar elementos
+    document.querySelectorAll('.collection-item, .product-card, .feature').forEach(el => {
+        observer.observe(el);
     });
 }
 
+// ============================================
+// 📝 FORMULÁRIOS (VERSÃO WHATSAPP)
+// ============================================
+
+function initFormHandlers() {
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', handleContactForm);
+    }
+}
+
+/**
+ * *** FUNÇÃO MODIFICADA ***
+ * Agora envia os dados do formulário para o WhatsApp.
+ */
+function handleContactForm(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
+    
+    // 1. Formata a mensagem que será enviada
+    // Usamos .trim() para remover espaços em branco desnecessários
+    const message = `
+Olá! Gostaria de fazer um contato pelo site.
+
+*Nome:* ${data.name.trim()}
+*Email:* ${data.email.trim()}
+*Telefone:* ${data.phone ? data.phone.trim() : 'Não preenchido'}
+*Assunto:* ${data.subject}
+
+*Mensagem:*
+${data.message.trim()}
+    `.trim(); // .trim() final para a mensagem inteira
+    
+    // 2. Pega o número de telefone do seu objeto CONFIG
+    const whatsappNumber = CONFIG.whatsappNumber;
+    
+    // 3. Cria a URL do WhatsApp, codificando a mensagem
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    
+    // 4. Abre o WhatsApp em uma nova aba
+    window.open(whatsappUrl, '_blank');
+    
+    // 5. Limpa o formulário após o envio
+    e.target.reset();
+}
 
 // ============================================
-// 🚀 INICIALIZAÇÃO
+// 🎯 UTILITÁRIOS
 // ============================================
 
-document.addEventListener('DOMContentLoaded', function() {
-    new ProductRenderer();
-    initNavigation();
-    initScrollAnimations(); // AGORA CORRIGIDA
-    initFormHandlers();
-});
+// Format currency
+function formatCurrency(value) {
+    return new Intl.NumberFormat(CONFIG.locale, {
+        style: 'currency',
+        currency: CONFIG.currency
+    }).format(value);
+}
+
+// Debounce function
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// ============================================
+// 🚀 DEBUG E INICIALIZAÇÃO FINAL
+// ============================================
+
+// Garantir que tudo seja inicializado corretamente
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('Beleza de Móveis - Sistema inicializado com sucesso!');
+    });
+} else {
+    console.log('Beleza de Móveis - Sistema já carregado!');
+}
