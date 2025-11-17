@@ -19,8 +19,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/splitting@1.0.6/dist/splitting.css">
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>">
-    </head>
+    
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>">
+</head>
 <body>
     <nav class="navbar" id="navbar">
         <div class="nav-container">
@@ -36,7 +37,7 @@
                 <a href="#sobre" class="nav-link">Sobre</a>
                 <a href="#contato" class="nav-link">Contato</a>
                 
-                <button class="nav-btn mobile-close" id="mobileClose">
+                <button class="nav-btn mobile-close" id="mobileClose" aria-label="Fechar menu">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
@@ -51,12 +52,17 @@
 
     <section class="hero" id="inicio">
         <div class="hero-background">
-            <div class="hero-image"></div>
+            <div class="hero-video-container">
+                <video class="hero-video" autoplay loop muted playsinline poster="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1920&q=80">
+                    <source src="LOOP.mp4" type="video/mp4">
+                    <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1920&h=1080&fit=crop" alt="Ambiente de luxo">
+                </video>
+            </div>
             <div class="hero-overlay"></div>
         </div>
         <div class="hero-content">
             <div class="hero-text">
-                <h1 class="hero-title" data-splitting>
+                <h1 class="hero-title">
                     Transforme sua casa em um lar de luxo
                 </h1>
                 <p class="hero-subtitle">
@@ -83,20 +89,22 @@
         </div>
     </section>
 
-    <section class="collection" id="colecao">
+    <section class="collection section fade-in" id="colecao">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Nossas Coleções</h2>
-                <p class="section-subtitle">Cada peça é cuidadosamente selecionada para oferecer o melhor em design e qualidade</p>
+                <h2 class="section-title">Nossas Coleções Exclusivas</h2>
+                <p class="section-subtitle">
+                    Explore linhas de design sofisticado, cuidadosamente selecionadas para cada ambiente da sua casa.
+                </p>
             </div>
             
             <div class="collection-grid">
-                <div class="collection-item" data-category="living">
+                <div class="collection-item" data-category="sala">
                     <div class="collection-image">
-                        <img src="https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?w=800&h=600&fit=crop" alt="Sala de Estar" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?w=600&q=80" alt="Sala de Estar" loading="lazy">
                         <div class="collection-overlay">
                             <h3>Sala de Estar</h3>
-                            <p>Sofás, poltronas e mesas de centro</p>
+                            <p>Sofás, poltronas e racks</p>
                             <a href="#produtos" class="collection-link">
                                 <span>Explorar</span>
                                 <i class="fas fa-arrow-right"></i>
@@ -107,10 +115,10 @@
                 
                 <div class="collection-item" data-category="quarto">
                     <div class="collection-image">
-                        <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800&h=600&fit=crop" alt="Quarto" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1505693416388-b0346efee749?w=600&q=80" alt="Quarto" loading="lazy">
                         <div class="collection-overlay">
                             <h3>Quarto</h3>
-                            <p>Camas, cabeceiras e guarda-roupas</p>
+                            <p>Camas, cômodas e guarda-roupas</p>
                             <a href="#produtos" class="collection-link">
                                 <span>Explorar</span>
                                 <i class="fas fa-arrow-right"></i>
@@ -118,10 +126,10 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="collection-item" data-category="cozinha">
                     <div class="collection-image">
-                        <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&h=600&fit=crop" alt="Cozinha" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80" alt="Cozinha" loading="lazy">
                         <div class="collection-overlay">
                             <h3>Cozinha</h3>
                             <p>Mesas, cadeiras e armários</p>
@@ -133,26 +141,12 @@
                     </div>
                 </div>
 
-                 <div class="collection-item" data-category="escritorio">
+                <div class="collection-item" data-category="escritorio">
                     <div class="collection-image">
-                        <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=800&h=600&fit=crop" alt="Escritório" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1596556108602-b2a3d0264023?w=600&q=80" alt="Escritório" loading="lazy">
                         <div class="collection-overlay">
-                            <h3>Escritório</h3>
-                            <p>Mesas, cadeiras e estantes</p>
-                            <a href="#produtos" class="collection-link">
-                                <span>Explorar</span>
-                                <i class="fas fa-arrow-right"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="collection-item" data-category="jardim">
-                    <div class="collection-image">
-                        <img src="https://images.unsplash.com/photo-1588991208658-069f5310df04?w=800&h=600&fit=crop" alt="Área Externa" loading="lazy">
-                        <div class="collection-overlay">
-                            <h3>Área Externa</h3>
-                            <p>Móveis para jardim e varanda</p>
+                            <h3>Home Office</h3>
+                            <p>Mesas, cadeiras ergonômicas e estantes</p>
                             <a href="#produtos" class="collection-link">
                                 <span>Explorar</span>
                                 <i class="fas fa-arrow-right"></i>
@@ -164,11 +158,13 @@
         </div>
     </section>
 
-    <section class="products" id="produtos">
+    <section class="products section fade-in" id="produtos">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Produtos em Destaque</h2>
-                <p class="section-subtitle">Selecionamos as peças mais desejadas para você</p>
+                <h2 class="section-title">Destaques e Lançamentos</h2>
+                <p class="section-subtitle">
+                    Móveis premium com as melhores condições. Encontre o que falta para seu projeto de design.
+                </p>
             </div>
             
             <div class="products-filter">
@@ -177,19 +173,13 @@
                 <button class="filter-btn" data-filter="camas">Camas</button>
                 <button class="filter-btn" data-filter="mesas">Mesas</button>
                 <button class="filter-btn" data-filter="poltronas">Poltronas</button>
-                <button class="filter-btn" data-filter="cozinha">Cozinha</button>
-                <button class="filter-btn" data-filter="escritorio">Escritório</button>
-                <button class="filter-btn" data-filter="jardim">Jardim</button>
             </div>
             
             <div class="products-grid" id="productsGrid">
                 </div>
             
-            <div class="products-load-more">
-                <button class="btn btn-outline" id="loadMoreBtn">
-                    <span>Carregar Mais</span>
-                    <i class="fas fa-plus"></i>
-                </button>
+            <div class="products-actions">
+                <button class="btn btn-secondary" id="loadMore">Carregar Mais Produtos</button>
             </div>
         </div>
     </section>
@@ -237,60 +227,71 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="about-image">
-                    <img src="https://images.unsplash.com/photo-1616046229478-9901c5536a45?w=600&h=800&fit=crop" alt="Nossa Loja" loading="lazy">
+                    <img src="BELEZMOVEIS.png" alt="Equipe de designers de móveis">
                     <div class="about-image-overlay">
-                        <span>Tradição e Excelência</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="contact" id="contato">
+    <section class="contact section fade-in" id="contato">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Entre em Contato</h2>
-                <p class="section-subtitle">Estamos prontos para ajudar você a encontrar os móveis perfeitos</p>
+                <h2 class="section-title">Fale Conosco</h2>
+                <p class="section-subtitle">
+                    Tire suas dúvidas, solicite um orçamento ou agende uma visita. Nossa equipe está pronta para te atender.
+                </p>
             </div>
             
             <div class="contact-content">
+                <form id="contactForm" class="contact-form">
+                    <h3 class="form-title">Envie sua Mensagem por WhatsApp</h3>
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" required>
+                        <label for="name">Nome completo</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" required>
+                        <label for="email">E-mail</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="phone" name="phone" required>
+                        <label for="phone">Telefone (DDD + Número)</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="subject" name="subject" required value="Orçamento de Móveis">
+                        <label for="subject">Assunto</label>
+                    </div>
+                    <div class="form-group textarea-group">
+                        <textarea id="message" name="message" rows="4" required></textarea>
+                        <label for="message">Sua Mensagem / Detalhes do Pedido</label>
+                    </div>
+                    <button type="submit" class="btn btn-whatsapp">
+                        <i class="fab fa-whatsapp"></i> Enviar Mensagem
+                    </button>
+                </form>
+                
                 <div class="contact-info">
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div class="contact-text">
-                            <h3>Endereço</h3>
-                            <p>Av. Tancredo Neves, 1485<br>Salvador, BA - 41820-021</p>
-                        </div>
+                    <h3 class="form-title">Informações de Contato</h3>
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <p>Salvador, Bahia - Brasil (Atendemos todo o país)</p>
                     </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-phone"></i>
-                        </div>
-                        <div class="contact-text">
-                            <h3>Telefone</h3>
-                            <p>(71) 99271-4599</p>
-                        </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <p>+55 71 99271-4599 (WhatsApp)</p>
                     </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div class="contact-text">
-                            <h3>Horário</h3>
-                            <p>Segunda a Sábado<br>9h às 18h</p>
-                        </div>
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <p>contato@belezademoveis.com.br</p>
                     </div>
                     
                     <div class="contact-actions">
-                        <a href="https://wa.me/5571992714599" class="btn btn-whatsapp" target="_blank">
-                            <i class="fab fa-whatsapp"></i>
-                            <span>Falar no WhatsApp</span>
+                        <a href="https://wa.me/5571992714599" target="_blank" class="btn btn-whatsapp">
+                            <i class="fab fa-whatsapp"></i> Atendimento Rápido
                         </a>
                     </div>
                 </div>
@@ -341,35 +342,28 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-section footer-about">
-                    <div class="footer-brand">
+                <div class="footer-section footer-brand-section">
+                    <div class="nav-brand">
                         <i class="fas fa-home"></i>
                         <span>BELEZA DE MÓVEIS</span>
                     </div>
                     <p class="footer-description">
-                        Transformando casas em lares acolhedores há mais de 15 anos com móveis de excelente qualidade e design exclusivo.
+                        Móveis de luxo e design exclusivo direto da fábrica. Transformando ambientes com elegância e qualidade premium.
                     </p>
                     <div class="footer-social">
-                        <a href="#" aria-label="Facebook">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" aria-label="Instagram">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" aria-label="WhatsApp">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
                     </div>
                 </div>
                 
                 <div class="footer-section">
                     <h3 class="footer-heading">Produtos</h3>
                     <ul class="footer-links">
-                        <li><a href="#produtos">Sofás</a></li>
-                        <li><a href="#produtos">Camas</a></li>
-                        <li><a href="#produtos">Mesas</a></li>
-                        <li><a href="#produtos">Poltronas</a></li>
-                        <li><a href="#produtos">Guarda-roupas</a></li>
+                        <li><a href="#produtos" data-filter="sofas" class="filter-link">Sofás</a></li>
+                        <li><a href="#produtos" data-filter="camas" class="filter-link">Camas</a></li>
+                        <li><a href="#produtos" data-filter="mesas" class="filter-link">Mesas</a></li>
+                        <li><a href="#produtos" data-filter="poltronas" class="filter-link">Poltronas</a></li>
                     </ul>
                 </div>
                 
@@ -379,8 +373,6 @@
                         <li><a href="#contato">Fale Conosco</a></li>
                         <li><a href="#">Entregas</a></li>
                         <li><a href="#">Garantia</a></li>
-                        <li><a href="#">Trocas</a></li>
-                        <li><a href="#">Pagamentos</a></li>
                     </ul>
                 </div>
                 
@@ -390,15 +382,12 @@
                         <li><a href="#sobre">Sobre Nós</a></li>
                         <li><a href="#">Política de Privacidade</a></li>
                         <li><a href="#">Termos de Uso</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Trabalhe Conosco</a></li>
                     </ul>
                 </div>
             </div>
             
             <div class="footer-bottom">
                 <p>&copy; 2024 Beleza de Móveis. Todos os direitos reservados.</p>
-                <p>CNPJ: 12.345.678/0001-90 | Desenvolvido com ❤️ para transformar lares</p>
             </div>
         </div>
     </footer>

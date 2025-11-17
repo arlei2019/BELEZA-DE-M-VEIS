@@ -1,20 +1,25 @@
 // ============================================
-// 🚀 BELEZA DE MÓVEIS - JAVASCRIPT PREMIUM v2.1
+// 🚀 BELEZA DE MÓVEIS - JAVASCRIPT PREMIUM
 // ============================================
 
 // Configurações Globais
 const CONFIG = {
     whatsappNumber: '5571992714599',
     currency: 'BRL',
-    locale: 'pt-BR',
-    animations: {
-        duration: 0.3,
-        ease: 'power2.out'
-    }
+    locale: 'pt-BR'
+};
+
+// Função de formatação de preço profissional usando Intl.NumberFormat
+const formatPrice = (price) => {
+    return new Intl.NumberFormat(CONFIG.locale, {
+        style: 'currency',
+        currency: CONFIG.currency,
+        minimumFractionDigits: 2,
+    }).format(price);
 };
 
 // ============================================
-// 📦 PRODUTOS - Dados Realistas
+// 📦 PRODUTOS - Dados Corrigidos e Completos
 // ============================================
 
 const PRODUCTS_DATA = [
@@ -24,74 +29,69 @@ const PRODUCTS_DATA = [
         category: "sofas",
         price: 3899.90,
         originalPrice: 4874.88,
-        image: "https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?w=800&h=600&fit=crop",
-        description: "Sofá Chesterfield clássico em couro legítimo marrom. Design atemporal com acabamento impecável. Perfeito para ambientes sofisticados.",
-        specs: "Largura: 220cm | Profundidade: 95cm | Altura: 85cm | Material: Couro Legítimo",
+        image: "https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?w=600&q=80",
+        description: "Sofá clássico em couro legítimo. Design atemporal e acabamento impecável.",
+        specs: "L: 220cm | P: 95cm | Couro Legítimo",
         isNew: false,
         isPromotion: true,
         discount: 20,
-        isTopSeller: true,
-        colors: ["Marrom", "Preto", "Caramelo"]
+        isTopSeller: true
     },
     {
         id: 2,
-        name: "Cama Queen Size Diamante",
+        name: "Cama King Size Royal",
         category: "camas",
-        price: 5299.00,
-        originalPrice: 6623.75,
-        image: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800&h=600&fit=crop",
-        description: "Cama queen size com cabeceira diamantada luxuosa. Estrutura em madeira maciça com acabamento em verniz fosco. Design moderno e elegante.",
-        specs: "Largura: 198cm | Comprimento: 208cm | Altura: 120cm | Madeira Maciça",
-        isNew: false,
-        isPromotion: true,
-        discount: 20,
-        isTopSeller: true,
-        colors: ["Branco", "Preto", "Madeira Natural"]
+        price: 2599.90,
+        originalPrice: 3200.00,
+        image: "https://images.unsplash.com/photo-1505693416388-b0346efee749?w=600&q=80",
+        description: "Conforto supremo com cabeceira estofada em veludo.",
+        specs: "King Size | Veludo Premium",
+        isNew: true,
+        isPromotion: false,
+        discount: 0,
+        isTopSeller: true
     },
     {
         id: 3,
-        name: "Mesa de Jantar Oval Premium",
+        name: "Mesa de Jantar Carvalho",
         category: "mesas",
-        price: 3199.90,
-        originalPrice: 3999.88,
-        image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&h=600&fit=crop",
-        description: "Mesa de jantar oval em mármore travertino com base em aço inox dourado. Suporta até 8 pessoas. Peça única de design italiano.",
-        specs: "Largura: 220cm | Profundidade: 110cm | Altura: 75cm | Mármore + Aço Inox",
-        isNew: true,
-        isPromotion: true,
-        discount: 20,
-        isTopSeller: false,
-        colors: ["Mármore Bege", "Mármore Preto"]
+        price: 1899.90,
+        originalPrice: null,
+        image: "https://images.unsplash.com/photo-1577140917170-285929dfe55c?w=600&q=80",
+        description: "Mesa robusta em madeira maciça para 6 lugares.",
+        specs: "L: 180cm | Madeira Maciça",
+        isNew: false,
+        isPromotion: false,
+        discount: 0,
+        isTopSeller: false
     },
     {
         id: 4,
-        name: "Poltrona Reclinável Luxo",
+        name: "Poltrona de Leitura Modern",
         category: "poltronas",
-        price: 2499.00,
-        originalPrice: 3123.75,
-        image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&h=600&fit=crop",
-        description: "Poltrona reclinável em couro sintético premium com sistema de relaxamento automático. Conforto e sofisticação em um único produto.",
-        specs: "Largura: 85cm | Profundidade: 90cm | Altura: 105cm | Couro Sintético Premium",
-        isNew: false,
+        price: 899.90,
+        originalPrice: 1100.00,
+        image: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=600&q=80",
+        description: "Design ergonômico perfeito para seu canto de leitura.",
+        specs: "Tecido Linho | Pés Palito",
+        isNew: true,
         isPromotion: true,
-        discount: 20,
-        isTopSeller: true,
-        colors: ["Caramelo", "Preto", "Cinza"]
+        discount: 15,
+        isTopSeller: false
     },
     {
         id: 5,
-        name: "Sofá Modular Contemporâneo",
+        name: "Sofá Retrátil Confort",
         category: "sofas",
-        price: 4599.90,
-        originalPrice: 5749.88,
-        image: "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=800&h=600&fit=crop",
-        description: "Sofá modular contemporâneo em tecido suede premium. Configuração flexível para diferentes ambientes. Almofadas inclusas.",
-        specs: "Largura: 280cm | Profundidade: 180cm | Altura: 85cm | Tecido Suede Premium",
-        isNew: true,
+        price: 2200.00,
+        originalPrice: 2800.00,
+        image: "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=600&q=80",
+        description: "Sofá retrátil e reclinável, ideal para home theater.",
+        specs: "Aberto: 1.80m | Suede",
+        isNew: false,
         isPromotion: true,
         discount: 20,
-        isTopSeller: true,
-        colors: ["Bege", "Cinza Claro", "Verde Musgo"]
+        isTopSeller: true
     },
     {
         id: 6,
@@ -119,85 +119,65 @@ const PRODUCTS_DATA = [
         description: "Cadeira executiva em couro legítimo com ajuste de altura e reclinação. Base em alumínio polido com rodízios silenciosos.",
         specs: "Altura: 120cm | Largura: 65cm | Profundidade: 65cm | Couro Legítimo",
         isNew: false,
+        isPromotion: false,
+        discount: 0,
+        isTopSeller: false
+    },
+    {
+        id: 7,
+        name: "Mesa Lateral Industrial",
+        category: "mesas",
+        price: 450.00,
+        originalPrice: 550.00,
+        image: "https://images.unsplash.com/photo-1533090481720-856c6e7591e0?w=600&q=80",
+        description: "Pequena e elegante, com base de metal e tampo de madeira.",
+        specs: "A: 60cm | Ferro e MDF",
+        isNew: true,
         isPromotion: true,
-        discount: 20,
-        isTopSeller: true,
-        colors: ["Preto", "Marrom", "Cinza"]
+        discount: 18,
+        isTopSeller: false
     },
     {
         id: 8,
-        name: "Mesa de Centro de Vidro",
-        category: "living",
-        price: 1599.90,
-        originalPrice: 1999.88,
-        image: "https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?w=800&h=600&fit=crop",
-        description: "Mesa de centro com tampo de vidro temperado e base em aço inox. Design minimalista e elegante para salas modernas.",
-        specs: "Largura: 120cm | Profundidade: 60cm | Altura: 45cm | Vidro + Aço Inox",
-        isNew: true,
-        isPromotion: true,
-        discount: 20,
-        isTopSeller: false,
-        colors: ["Vidro Transparente", "Vidro Fumê"]
+        name: "Poltrona Giratória Conforto",
+        category: "poltronas",
+        price: 1250.00,
+        originalPrice: null,
+        image: "https://images.unsplash.com/photo-1617300799796-f94689252c1e?w=600&q=80",
+        description: "Base giratória para máximo conforto e mobilidade.",
+        specs: "Base Cromada | Linho Cinza",
+        isNew: false,
+        isPromotion: false,
+        discount: 0,
+        isTopSeller: true
     },
     {
         id: 9,
-        name: "Conjunto de Jantar 6 Cadeiras",
-        category: "cozinha",
-        price: 4499.90,
-        originalPrice: 5624.88,
-        image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&h=600&fit=crop",
-        description: "Conjunto completo com mesa redonda e 6 cadeiras estofadas. Estrutura em madeira maciça com acabamento em laca branca.",
-        specs: "Mesa: 150cm Ø | Cadeira: 45x50x90cm | Madeira Maciça",
-        isNew: false,
-        isPromotion: true,
-        discount: 20,
-        isTopSeller: true,
-        colors: ["Branco", "Preto", "Madeira Natural"]
+        name: "Sofá de Canto Modular",
+        category: "sofas",
+        price: 4500.00,
+        originalPrice: null,
+        image: "https://images.unsplash.com/photo-1484101403633-562f891dc89a?w=600&q=80",
+        description: "Versatilidade para grandes salas, módulos ajustáveis.",
+        specs: "5 Lugares | Tecido Cinza",
+        isNew: true,
+        isPromotion: false,
+        discount: 0,
+        isTopSeller: false
     },
     {
         id: 10,
-        name: "Sofá de Jardim Resinado",
-        category: "jardim",
-        price: 2899.90,
-        originalPrice: 3624.88,
-        image: "https://images.unsplash.com/photo-1588991208658-069f5310df04?w=800&h=600&fit=crop",
-        description: "Sofá de jardim em resinado de alta qualidade com almofadas impermeáveis. Resiste às intempéries e mantém a beleza.",
-        specs: "Largura: 200cm | Profundidade: 80cm | Altura: 85cm | Resinado + Almofadas",
-        isNew: true,
-        isPromotion: true,
-        discount: 20,
-        isTopSeller: false,
-        colors: ["Branco", "Caramelo", "Verde"]
-    },
-    {
-        id: 11,
-        name: "Estante Modular 5 Prateleiras",
-        category: "escritorio",
-        price: 1299.90,
-        originalPrice: 1624.88,
-        image: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=800&h=600&fit=crop",
-        description: "Estante modular com 5 prateleiras ajustáveis. Sistema de montagem fácil e design moderno. Perfeita para escritórios e salas.",
-        specs: "Largura: 180cm | Altura: 200cm | Profundidade: 30cm | MDP Premium",
+        name: "Mesa de Centro Vidro",
+        category: "mesas",
+        price: 780.00,
+        originalPrice: 900.00,
+        image: "https://images.unsplash.com/photo-1530018607912-eff2daa1bac4?w=600&q=80",
+        description: "Elegância e transparência para ampliar o ambiente.",
+        specs: "Vidro Temperado 10mm",
         isNew: false,
         isPromotion: true,
-        discount: 20,
-        isTopSeller: true,
-        colors: ["Branco", "Preto", "Madeira"]
-    },
-    {
-        id: 12,
-        name: "Poltrona de Balanço Vintage",
-        category: "poltronas",
-        price: 2199.90,
-        originalPrice: 2749.88,
-        image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&h=600&fit=crop",
-        description: "Poltrona de balanço vintage em tecido macio com estrutura em madeira. Conforto e estilo retrô para momentos de relaxamento.",
-        specs: "Largura: 70cm | Profundidade: 85cm | Altura: 100cm | Tecido + Madeira",
-        isNew: true,
-        isPromotion: true,
-        discount: 20,
-        isTopSeller: false,
-        colors: ["Bege", "Verde", "Rosa"]
+        discount: 13,
+        isTopSeller: false
     }
 ];
 
@@ -207,81 +187,59 @@ const PRODUCTS_DATA = [
 
 class ProductRenderer {
     constructor() {
-        this.products = PRODUCTS_DATA;
-        this.filteredProducts = [...this.products];
+        this.productsGrid = document.getElementById('productsGrid');
+        this.loadMoreButton = document.getElementById('loadMore');
+        this.filterButtons = document.querySelectorAll('.filter-btn');
+        this.productsPerPage = 6;
         this.currentPage = 1;
         this.productsPerPage = 8;
         
-        this.init();
-    }
-
-    init() {
-        this.setupEventListeners();
-        this.renderProducts();
-        this.setupFilters();
-    }
-
-    setupEventListeners() {
-        // Filtros
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                this.handleFilter(e.target.dataset.filter);
-            });
-        });
-
-        // Load more
-        const loadMoreBtn = document.getElementById('loadMoreBtn');
-        if (loadMoreBtn) {
-            loadMoreBtn.addEventListener('click', () => {
-                this.loadMoreProducts();
-            });
-        }
-    }
-
-    setupFilters() {
-        // Inicializar com "Todos" ativo
-        this.handleFilter('all');
-    }
-
-    handleFilter(filter) {
-        // Atualizar botões ativos
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        document.querySelector(`[data-filter="${filter}"]`).classList.add('active');
-
-        // Filtrar produtos
-        if (filter === 'all') {
-            this.filteredProducts = [...this.products];
-        } else {
-            this.filteredProducts = this.products.filter(product => 
-                product.category === filter
-            );
-        }
-
-        // Resetar paginação e renderizar
-        this.currentPage = 1;
+        this.bindEvents();
         this.renderProducts();
     }
 
-    renderProducts() {
-        const productsGrid = document.getElementById('productsGrid');
-        if (!productsGrid) return;
+    bindEvents() {
+        this.loadMoreButton.addEventListener('click', () => this.loadMore());
+        this.filterButtons.forEach(button => {
+            button.addEventListener('click', (e) => this.filterProducts(e.target.dataset.filter));
+        });
+        // Adiciona evento de clique para links de filtro no footer
+        document.querySelectorAll('.filter-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.filterProducts(e.target.dataset.filter);
+                document.getElementById('produtos').scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    }
 
-        const startIndex = 0;
-        const endIndex = this.currentPage * this.productsPerPage;
-        const productsToShow = this.filteredProducts.slice(startIndex, endIndex);
+    getFilteredProducts() {
+        if (this.currentFilter === 'all') {
+            return PRODUCTS_DATA;
+        }
+        return PRODUCTS_DATA.filter(p => p.category === this.currentFilter);
+    }
 
-        // Limpar grid
-        productsGrid.innerHTML = '';
+    renderProducts(append = false) {
+        const products = this.getFilteredProducts();
+        const start = append ? (this.currentPage - 1) * this.productsPerPage : 0;
+        const end = this.currentPage * this.productsPerPage;
+        const productsToRender = products.slice(start, end);
 
-        // Renderizar produtos
-        productsToShow.forEach(product => {
-            const productCard = this.createProductCard(product);
-            productsGrid.appendChild(productCard);
+        if (!append) {
+            this.productsGrid.innerHTML = '';
+        }
+
+        productsToRender.forEach(product => {
+            this.productsGrid.appendChild(this.createProductCard(product));
         });
 
-        // Atualizar botão load more
+        // Adiciona a animação de fade-in para os novos cards
+        const newCards = this.productsGrid.querySelectorAll('.product-card:not(.animate-in)');
+        newCards.forEach((card, index) => {
+            setTimeout(() => card.classList.add('animate-in'), index * 100);
+        });
+
         this.updateLoadMoreButton();
     }
 
@@ -290,24 +248,23 @@ class ProductRenderer {
         card.className = 'product-card';
         card.dataset.productId = product.id;
 
-        const discountBadge = product.isPromotion ? `
-            <div class="product-badge product-badge-discount">-${product.discount}%</div>
-        ` : '';
+        const discountBadge = product.isPromotion 
+            ? `<div class="product-badge product-badge-discount">-${product.discount}%</div>` 
+            : '';
+        
+        const newBadge = product.isNew 
+            ? `<div class="product-badge product-badge-new">Novo</div>` 
+            : '';
 
-        const newBadge = product.isNew ? `
-            <div class="product-badge product-badge-new">Novo</div>
-        ` : '';
-
-        const topSellerBadge = product.isTopSeller ? `
-            <div class="product-badge product-badge-top">Mais Vendido</div>
-        ` : '';
-
-        const originalPrice = product.originalPrice ? `
-            <span class="product-price-original">R$ ${product.originalPrice.toFixed(2).replace('.', ',')}</span>
-        ` : '';
+        // Uso da função formatPrice para formatação profissional
+        const originalPriceHTML = product.originalPrice 
+            ? `<span class="product-price-original">${formatPrice(product.originalPrice)}</span>` 
+            : '';
+        
+        const currentPriceHTML = `<span class="product-price-current">${formatPrice(product.price)}</span>`;
 
         card.innerHTML = `
-            <div class="product-image">
+            <div class="product-image-container">
                 <img src="${product.image}" alt="${product.name}" loading="lazy">
                 <div class="product-badges">
                     ${discountBadge}
@@ -315,53 +272,44 @@ class ProductRenderer {
                     ${topSellerBadge}
                 </div>
             </div>
-            <div class="product-content">
-                <h3 class="product-title">${product.name}</h3>
-                <p class="product-description">${product.description}</p>
-                <div class="product-specs">${product.specs}</div>
-                <div class="product-price">
-                    <span class="product-price-current">R$ ${product.price.toFixed(2).replace('.', ',')}</span>
-                    ${originalPrice}
+            <div class="product-details">
+                <div class="product-info">
+                    <h4 class="product-name">${product.name}</h4>
+                    <p class="product-description">${product.description}</p>
+                    <p class="product-specs">${product.specs}</p>
+                </div>
+                <div class="product-prices">
+                    ${originalPriceHTML}
+                    ${currentPriceHTML}
                 </div>
                 <div class="product-actions">
                     <button class="btn-whatsapp" onclick="productRenderer.openWhatsApp(${product.id})">
                         <i class="fab fa-whatsapp"></i>
                         <span>Comprar</span>
                     </button>
+                    <a href="https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(`Olá, gostaria de saber mais sobre o produto: ${product.name} (ID: ${product.id}).`)}" target="_blank" class="btn btn-whatsapp btn-small" aria-label="Comprar ${product.name} via WhatsApp">
+                        <i class="fab fa-whatsapp"></i> Comprar
+                    </a>
                 </div>
             </div>
         `;
-
         return card;
     }
 
-    loadMoreProducts() {
-        this.currentPage++;
-        this.renderProducts();
-    }
-
     updateLoadMoreButton() {
-        const loadMoreBtn = document.getElementById('loadMoreBtn');
-        if (!loadMoreBtn) return;
-
-        const totalProducts = this.filteredProducts.length;
-        const showingProducts = this.currentPage * this.productsPerPage;
-
-        if (showingProducts >= totalProducts) {
-            loadMoreBtn.style.display = 'none';
+        const totalProducts = this.getFilteredProducts().length;
+        const productsShown = this.currentPage * this.productsPerPage;
+        
+        if (productsShown >= totalProducts) {
+            this.loadMoreButton.style.display = 'none';
         } else {
-            loadMoreBtn.style.display = 'flex';
+            this.loadMoreButton.style.display = 'inline-flex';
         }
     }
 
-    openWhatsApp(productId) {
-        const product = this.products.find(p => p.id === productId);
-        if (!product) return;
-
-        const message = `Olá! Tenho interesse no produto: ${product.name} - R$ ${product.price.toFixed(2).replace('.', ',')}`;
-        const whatsappUrl = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`;
-        
-        window.open(whatsappUrl, '_blank');
+    loadMore() {
+        this.currentPage++;
+        this.renderProducts(true);
     }
 }
 
@@ -393,45 +341,39 @@ document.addEventListener('DOMContentLoaded', function() {
 // ============================================
 
 function initNavigation() {
-    const navbar = document.getElementById('navbar');
     const mobileToggle = document.getElementById('mobileToggle');
     const mobileClose = document.getElementById('mobileClose');
     const navMenu = document.getElementById('navMenu');
 
-    // Scroll effect
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 100) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
+    mobileToggle.addEventListener('click', () => {
+        navMenu.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Evita rolagem no fundo
     });
 
-    // Mobile menu toggle
-    if (mobileToggle && navMenu) {
-        mobileToggle.addEventListener('click', () => {
-            navMenu.classList.add('active');
-        });
-    }
+    mobileClose.addEventListener('click', () => {
+        navMenu.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    });
 
-    if (mobileClose && navMenu) {
-        mobileClose.addEventListener('click', () => {
-            navMenu.classList.remove('active');
-        });
-    }
-
-    // Close mobile menu on link click
+    // Fechar menu ao clicar em um link
     document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', () => {
-            navMenu.classList.remove('active');
+            if (window.innerWidth <= 992) {
+                navMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
         });
     });
 }
 
 // ============================================
-// ✨ ANIMAÇÕES
+// ✨ ANIMAÇÕES E EFEITOS (FIX DE BUG)
 // ============================================
 
+/**
+ * Função para inicializar animações de scroll.
+ * Esta função corrige o erro de referência na inicialização (bug inicial).
+ */
 function initScrollAnimations() {
     const observerOptions = {
         threshold: 0.1,
