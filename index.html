@@ -125,47 +125,76 @@
     
     <!-- ESTRUTURA DE DADOS JSON-LD (Schema.org) -->
     <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FurnitureStore",
+  "name": "BELEZA DE MÓVEIS",
+  "description": "Móveis de luxo e design exclusivo com preços direto da fábrica em Salvador",
+  "url": "https://arlei2019.github.io/BELEZA-DE-M-VEIS/",
+  "telephone": "+5571992714599",
+  "email": "contato@belezademoveis.com.br",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Av. Tancredo Neves, 1234",
+    "addressLocality": "Salvador",
+    "addressRegion": "BA",
+    "postalCode": "41820-021",
+    "addressCountry": "BR"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": -12.9730,
+    "longitude": -38.5023
+  },
+  "openingHours": "Mo-Fr 09:00-18:00, Sa 09:00-14:00",
+  "priceRange": "R$",
+  "paymentAccepted": "Cash, Credit Card, Debit Card, Bank Transfer",
+  "makesOffer": [
     {
-      "@context": "https://schema.org",
-      "@type": "FurnitureStore",
-      "name": "BELEZA DE MÓVEIS",
-      "description": "Móveis de luxo e design exclusivo com preços direto da fábrica em Salvador",
-      "url": "https://arlei2019.github.io/BELEZA-DE-M-VEIS/",
-      "telephone": "+5571992714599",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Av. Tancredo Neves, 1234",
-        "addressLocality": "Salvador",
-        "addressRegion": "BA",
-        "postalCode": "41820-021",
-        "addressCountry": "BR"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": -12.9730,
-        "longitude": -38.5023
-      },
-      "openingHours": "Mo-Fr 09:00-18:00, Sa 09:00-14:00",
-      "priceRange": "R$",
-      "paymentAccepted": "Cash, Credit Card, Debit Card, Bank Transfer",
-      "hasOfferCatalog": {
-        "@type": "OfferCatalog",
-        "name": "Móveis de Luxo",
-        "itemListElement": [
-          {"@type": "Offer", "itemOffered": {"@type": "Product", "name": "Sofás de Luxo"}},
-          {"@type": "Offer", "itemOffered": {"@type": "Product", "name": "Camas Premium"}},
-          {"@type": "Offer", "itemOffered": {"@type": "Product", "name": "Mesas de Jantar"}}
-        ]
-      },
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "contactType": "Sales",
-        "telephone": "+5571992714599",
-        "email": "contato@belezademoveis.com.br",
-        "availableLanguage": "Portuguese"
+      "@type": "Offer",
+      "url": "https://seusite.com.br#sofas",
+      "itemOffered": {
+        "@type": "Product",
+        "name": "Sofás de Luxo",
+        "description": "Sofás premium em couro legítimo e tecidos exclusivos",
+        "category": "Sofás"
+      }
+    },
+    {
+      "@type": "Offer",
+      "url": "https://seusite.com.br#camas",
+      "itemOffered": {
+        "@type": "Product",
+        "name": "Camas Premium",
+        "description": "Camas queen e king size com design exclusivo",
+        "category": "Camas"
+      }
+    },
+    {
+      "@type": "Offer",
+      "url": "https://seusite.com.br#mesas",
+      "itemOffered": {
+        "@type": "Product",
+        "name": "Mesas de Jantar",
+        "description": "Mesas em mármore travertino, vidro temperado e madeira maciça",
+        "category": "Mesas"
       }
     }
-    </script>
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "Sales",
+    "telephone": "+5571992714599",
+    "whatsapp": "5571992714599",
+    "email": "contato@belezademoveis.com.br",
+    "availableLanguage": ["Portuguese", "Spanish"],
+    "areaServed": {
+      "@type": "City",
+      "name": "Salvador"
+    }
+  }
+}
+</script>
 
     <!-- Verificações de Webmasters (substitua pelos seus códigos) -->
     <!-- Google Search Console -->
