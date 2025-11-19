@@ -1,6 +1,5 @@
 // ============================================
-// BELEZA DE MÓVEIS - script.js (PROFESSIONAL EDITION)
-// Funcionalidades aprimoradas para loja de móveis de luxo
+// BELEZA DE MÓVEIS - script.js (VERSÃO FINAL CORRIGIDA)
 // ============================================
 
 // Configurações
@@ -11,8 +10,9 @@ const CONFIG = {
   companyName: 'BELEZA DE MÓVEIS'
 };
 
-// Dados dos produtos
+// Dados dos produtos - ESTRUTURA OTIMIZADA SEM DUPLICIDADES
 const PRODUCTS_DATA = [
+  // ===== PRODUTO 1 =====
   {
     id: 1,
     name: "Sofá Chesterfield 3 Lugares",
@@ -27,6 +27,7 @@ const PRODUCTS_DATA = [
     discount: 20,
     isTopSeller: true
   },
+  // ===== PRODUTO 2 =====
   {
     id: 2,
     name: "Cama Queen Size Diamante",
@@ -41,6 +42,7 @@ const PRODUCTS_DATA = [
     discount: 20,
     isTopSeller: true
   },
+  // ===== PRODUTO 3 =====
   {
     id: 3,
     name: "Mesa de Jantar Oval Premium",
@@ -55,6 +57,7 @@ const PRODUCTS_DATA = [
     discount: 20,
     isTopSeller: false
   },
+  // ===== PRODUTO 4 =====
   {
     id: 4,
     name: "Poltrona Reclinável Luxo",
@@ -69,6 +72,7 @@ const PRODUCTS_DATA = [
     discount: 20,
     isTopSeller: true
   },
+  // ===== PRODUTO 5 =====
   {
     id: 5,
     name: "Sofá Modular Contemporâneo",
@@ -83,6 +87,7 @@ const PRODUCTS_DATA = [
     discount: 20,
     isTopSeller: true
   },
+  // ===== PRODUTO 6 =====
   {
     id: 6,
     name: "Guarda-Roupa 6 Portas Espelhado",
@@ -97,6 +102,7 @@ const PRODUCTS_DATA = [
     discount: 20,
     isTopSeller: false
   },
+  // ===== PRODUTO 7 =====
   {
     id: 7,
     name: "Cadeira Executiva Premium",
@@ -111,6 +117,7 @@ const PRODUCTS_DATA = [
     discount: 20,
     isTopSeller: true
   },
+  // ===== PRODUTO 8 =====
   {
     id: 8,
     name: "Mesa de Centro de Vidro",
@@ -125,10 +132,11 @@ const PRODUCTS_DATA = [
     discount: 20,
     isTopSeller: false
   },
+  // ===== PRODUTO 9 =====
   {
     id: 9,
     name: "Conjunto de Jantar 6 Cadeiras",
-    category: "cozinha",
+    category: "jantar",
     price: 4499.90,
     originalPrice: 5624.88,
     image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&h=600&fit=crop",
@@ -139,6 +147,7 @@ const PRODUCTS_DATA = [
     discount: 20,
     isTopSeller: true
   },
+  // ===== PRODUTO 10 =====
   {
     id: 10,
     name: "Sofá de Jardim Resinado",
@@ -153,6 +162,7 @@ const PRODUCTS_DATA = [
     discount: 20,
     isTopSeller: false
   },
+  // ===== PRODUTO 11 =====
   {
     id: 11,
     name: "Estante Modular 5 Prateleiras",
@@ -167,6 +177,7 @@ const PRODUCTS_DATA = [
     discount: 20,
     isTopSeller: true
   },
+  // ===== PRODUTO 12 =====
   {
     id: 12,
     name: "Poltrona de Balanço Vintage",
@@ -180,8 +191,41 @@ const PRODUCTS_DATA = [
     isPromotion: true,
     discount: 20,
     isTopSeller: false
+  },
+  // ===== PRODUTO 13 - NOVO =====
+  {
+    id: 13,
+    name: "Mesa de Jantar Retangular 8 Lugares",
+    category: "jantar",
+    price: 4399.90,
+    originalPrice: 5499.88,
+    image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&h=600&fit=crop",
+    description: "Mesa retangular em madeira de demolição. Acomoda até 8 pessoas com elegância.",
+    specs: "Largura: 240cm | Profundidade: 100cm | Altura: 75cm | Madeira de Demolição",
+    isNew: true,
+    isPromotion: true,
+    discount: 20,
+    isTopSeller: true
+  },
+  // ===== PRODUTO 14 - NOVO =====
+  {
+    id: 14,
+    name: "Mesa de Centro Rústica",
+    category: "living",
+    price: 1899.90,
+    originalPrice: 2374.88,
+    image: "https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?w=800&h=600&fit=crop",
+    description: "Mesa de centro em madeira maciça com design rústico moderno.",
+    specs: "Largura: 120cm | Profundidade: 60cm | Altura: 45cm | Madeira Maciça",
+    isNew: true,
+    isPromotion: true,
+    discount: 20,
+    isTopSeller: false
   }
-];
+  // ↑↑↑↑↑↑↑↑↑↑ NÃO COLOQUE VÍRGULA NO ÚLTIMO PRODUTO ↑↑↑↑↑↑↑↑↑↑
+];  // ← Fechamento do array (NÃO MEXA)
+
+// RESTO DO CÓDIGO (não altere nada abaixo)...
 
 // Utilitários
 function formatCurrencyBR(value) {
@@ -202,6 +246,8 @@ function debounce(fn, wait = 100) {
     timeout = setTimeout(() => fn(...args), wait);
   };
 }
+
+// ... (todo o resto do código permanece igual) ...
 
 // Classe para renderizar produtos
 class ProductRenderer {
